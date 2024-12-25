@@ -8,6 +8,7 @@ import {
   pgTableCreator,
   timestamp,
   varchar,
+  text,
 } from "drizzle-orm/pg-core";
 
 /**
@@ -18,19 +19,51 @@ import {
  */
 export const createTable = pgTableCreator((name) => `eeshop_${name}`);
 
-export const posts = createTable(
-  "post",
+// two level category, first level is category, second level is subcategory, subcategory will be refered as categoryId in product table
+export const categories = createTable("category", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  name: varchar("name", { length: 256 }).notNull(),
+});
+
+export const subcategories = createTable("subcategory", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  name: varchar("name", { length: 256 }).notNull(),
+  categoryId: integer("category_id")
+    .references(() => categories.id)
+    .notNull(),
+});
+
+// table for products, contains product name, price, description, images, category, tags, and other usual fields
+export const products = createTable(
+  "product",
   {
     id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
-    name: varchar("name", { length: 256 }),
+    name: varchar("name", { length: 256 }).notNull(),
+    price: integer("price").notNull(),
+    description: text("description").notNull(),
+    // images is an array of strings
+    images: varchar("images", { length: 1024 })
+      .array()
+      .notNull()
+      .default(sql`'{}'::varchar[]`),
+    // category is ref to category table
+    subcategoryId: integer("subcategory_id")
+      .references(() => subcategories.id)
+      .notNull(),
+    // tags is an array of strings
+    tags: varchar("tags", { length: 256 })
+      .array()
+      .notNull()
+      .default(sql`'{}'::varchar[]`),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date()
-    ),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
   },
-  (example) => ({
-    nameIndex: index("name_idx").on(example.name),
-  })
+  (product) => ({
+    nameIndex: index("name_idx").on(product.name),
+  }),
 );
