@@ -22,15 +22,20 @@ export const createTable = pgTableCreator((name) => `eeshop_${name}`);
 // two level category, first level is category, second level is subcategory, subcategory will be refered as categoryId in product table
 export const categories = createTable("category", {
   id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
-  name: varchar("name", { length: 256 }).notNull(),
+  name: varchar("name", { length: 256 }).notNull().unique(),
 });
 
 export const subcategories = createTable("subcategory", {
   id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
-  name: varchar("name", { length: 256 }).notNull(),
+  name: varchar("name", { length: 256 }).notNull().unique(),
   categoryId: integer("category_id")
     .references(() => categories.id)
     .notNull(),
+});
+
+export const tags = createTable("tag", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  name: varchar("name", { length: 64 }).notNull().unique(),
 });
 
 // table for products, contains product name, price, description, images, category, tags, and other usual fields
@@ -50,8 +55,8 @@ export const products = createTable(
     subcategoryId: integer("subcategory_id")
       .references(() => subcategories.id)
       .notNull(),
-    // tags is an array of strings
-    tags: varchar("tags", { length: 256 })
+    // tags is ref to tags table
+    tags: varchar("tags", { length: 64 })
       .array()
       .notNull()
       .default(sql`'{}'::varchar[]`),

@@ -5,6 +5,9 @@ export default async function HomePage() {
   const products = await db.query.products.findMany({
     orderBy: (products, { desc }) => [desc(products.createdAt)],
   });
+  const categories = await db.query.categories.findMany();
+  const subcategories = await db.query.subcategories.findMany();
+  console.log(categories, subcategories);
   return (
     <main className="">
       <Link href="/admin">Admin</Link>
