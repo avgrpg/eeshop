@@ -2,8 +2,9 @@ import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
+import { z } from "zod";
 import { db } from "~/server/db";
-import { products } from "~/server/db/schema";
+import { productImages, products } from "~/server/db/schema";
 
 const f = createUploadthing();
 
@@ -26,20 +27,28 @@ export const ourFileRouter = {
       const user = await auth();
 
       // If you throw, the user will not be able to upload
-      if (!user?.userId) throw new UploadThingError("Unauthorized");
+      if (!user?.userId) throw new UploadThingError("Unauthorized") as Error;
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { userId: user.userId };
+      return { userId: user.userId, productId: req.headers.get("productId") };
     })
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
-      console.log("Upload complete for userId:", metadata.userId);
+      console.log("Upload complete for userId:", metadata);
 
-      console.log("file url", file.url);
+      console.log("file url", file);
 
-      await db.update(products).set({
-        images: [file.url],
-      }).where(eq(products.name, "item2"));
+      if (!metadata.productId)
+        throw new UploadThingError("Product ID is required") as Error;
+
+      const productId = z.coerce.number().safeParse(metadata.productId);
+      if (!productId.success)
+        throw new UploadThingError("Product ID is required") as Error;
+
+      await db.insert(productImages).values({
+        productId: productId.data,
+        url: file.url,
+      });
 
       // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
       return { uploadedBy: metadata.userId };

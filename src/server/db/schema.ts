@@ -46,20 +46,10 @@ export const products = createTable(
     name: varchar("name", { length: 256 }).notNull(),
     price: integer("price").notNull(),
     description: text("description").notNull(),
-    // images is an array of strings
-    images: varchar("images", { length: 1024 })
-      .array()
-      .notNull()
-      .default(sql`'{}'::varchar[]`),
     // category is ref to category table
     subcategoryId: integer("subcategory_id")
       .references(() => subcategories.id)
       .notNull(),
-    // tags is ref to tags table
-    tags: varchar("tags", { length: 64 })
-      .array()
-      .notNull()
-      .default(sql`'{}'::varchar[]`),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -72,3 +62,26 @@ export const products = createTable(
     nameIndex: index("name_idx").on(product.name),
   }),
 );
+
+// Junction table for products and tags
+export const productTags = createTable("product_tags", {
+  productId: integer("product_id")
+    .references(() => products.id)
+    .notNull(),
+  tagId: integer("tag_id")
+    .references(() => tags.id)
+    .notNull(),
+});
+
+// Table for product images
+export const productImages = createTable("product_images", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  productId: integer("product_id")
+    .references(() => products.id)
+    .notNull(),
+  url: text("url").notNull(),
+  order: integer("order").notNull().default(0), // For maintaining image order
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+});
