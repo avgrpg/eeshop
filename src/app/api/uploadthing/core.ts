@@ -1,10 +1,9 @@
 import { auth } from "@clerk/nextjs/server";
-import { eq } from "drizzle-orm";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 import { z } from "zod";
 import { db } from "~/server/db";
-import { productImages, products } from "~/server/db/schema";
+import { productImages } from "~/server/db/schema";
 
 const f = createUploadthing();
 
@@ -18,7 +17,7 @@ export const ourFileRouter = {
        * @see https://docs.uploadthing.com/file-routes#route-config
        */
       maxFileSize: "4MB",
-      maxFileCount: 1,
+      maxFileCount: 5,
     },
   })
     // Set permissions and file types for this FileRoute

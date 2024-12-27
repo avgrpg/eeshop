@@ -1,20 +1,23 @@
 import Link from "next/link";
 import { db } from "~/server/db";
+import { getProductsWithImagesnTags } from "~/server/queries";
 
 export default async function HomePage() {
-  const products = await db.query.products.findMany()
-  const productsWithImages = await db.query.productImages.findMany()
-  const productsWithTags = await db.query.productTags.findMany()
-  const tags = await db.query.tags.findMany()
+  // const products = await db.query.products.findMany()
+  // const productsWithImages = await db.query.productImages.findMany()
+  // const productsWithTags = await db.query.productTags.findMany()
+  // const tags = await db.query.tags.findMany()
 
-  const productsWithImagesAndTags = products.map((product) => {
-    return {
-      ...product,
-      images: productsWithImages.filter((image) => image.productId === product.id),
-      tags: productsWithTags.filter((tag) => tag.productId === product.id).map((tag) => tags.find((t) => t.id === tag.tagId))
-    }
-  })
-  console.log("productsWithImagesAndTags", productsWithImagesAndTags)
+  // const productsWithImagesAndTags = products.map((product) => {
+  //   return {
+  //     ...product,
+  //     images: productsWithImages.filter((image) => image.productId === product.id),
+  //     tags: productsWithTags.filter((tag) => tag.productId === product.id).map((tag) => tags.find((t) => t.id === tag.tagId))
+  //   }
+  // })
+  // console.log("productsWithImagesAndTags", productsWithImagesAndTags)
+
+  const productsWithImagesAndTags = await getProductsWithImagesnTags();
 
 
   const categories = await db.query.categories.findMany();

@@ -2,7 +2,7 @@
 
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-import { UploadButton, UploadDropzone } from "~/utils/uploadthing";
+import { UploadDropzone } from "~/utils/uploadthing";
 
 export default function AdminPage() {
   return (
