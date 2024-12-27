@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { db } from "~/server/db";
 import { getProductsWithImagesnTags } from "~/server/queries";
@@ -19,7 +20,6 @@ export default async function HomePage() {
 
   const productsWithImagesAndTags = await getProductsWithImagesnTags();
 
-
   const categories = await db.query.categories.findMany();
   const subcategories = await db.query.subcategories.findMany();
   console.log(categories, subcategories);
@@ -36,8 +36,16 @@ export default async function HomePage() {
             <p>{product.tags.map((tag) => tag?.name).join(", ")}</p>
             <div className="flex flex-wrap gap-2">
               {product.images.map((image) => (
-                <div className="w-20 h-20 border" key={image.id}>
-                  <img src={image.url} alt={image.url} />
+                <div className="h-20 w-20 border" key={image.id}>
+                  <Image
+                    src={image.url}
+                    alt={image.url}
+                    style={{
+                      objectFit: "contain",
+                    }}
+                    width={80}
+                    height={80}
+                  />
                 </div>
               ))}
             </div>
