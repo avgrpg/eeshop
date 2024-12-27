@@ -21,6 +21,8 @@ export const getProductsWithImagesnTags = cache(async () => {
       tagsData,
     ]);
 
+  console.log("get ProductsWithImagesnTags");
+
   const productsWithImagesAndTags = products.map((product) => {
     return {
       ...product,

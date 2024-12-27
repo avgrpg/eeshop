@@ -23,6 +23,7 @@ export const createTable = pgTableCreator((name) => `eeshop_${name}`);
 export const categories = createTable("category", {
   id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
   name: varchar("name", { length: 256 }).notNull().unique(),
+  description: text("description").notNull(),
 });
 
 export const subcategories = createTable("subcategory", {
@@ -31,6 +32,7 @@ export const subcategories = createTable("subcategory", {
   categoryId: integer("category_id")
     .references(() => categories.id)
     .notNull(),
+  description: text("description").notNull(),
 });
 
 export const tags = createTable("tag", {
