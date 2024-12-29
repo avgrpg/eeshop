@@ -6,7 +6,7 @@ import { UploadDropzone } from "~/utils/uploadthing";
 
 export default function AdminPage() {
   return (
-    <div className="flex flex-col gap-2 border p-2">
+    <div className="flex flex-1 flex-col gap-2 border p-2 border-red-300">
       Admin Page
       <Link href="/">back</Link>
       <UserButton />
