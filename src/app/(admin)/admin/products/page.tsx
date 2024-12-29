@@ -1,10 +1,30 @@
+import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "~/components/ui/badge";
-import { getProductsWithImagesnTags } from "~/server/queries";
+import { deleteProduct, getProductsWithImagesnTags } from "~/server/queries";
 
 import type { ProductWithImagesAndTags } from "~/server/queries";
 
 type ProductWithImagesAndTag = ProductWithImagesAndTags[number];
+
+const ProductDeleteButton = ({ productId }: { productId: number }) => {
+  return (
+    <div className="absolute top-2 right-2">
+      <form
+        action={async () => {
+          "use server";
+          await deleteProduct(productId);
+        }}
+      >
+        <button
+          className="rounded-full h-6 w-6 flex items-center justify-center bg-destructive text-destructive-foreground hover:bg-destructive/80 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+          >
+            <Trash2 size={16} />
+          </button>
+      </form>
+    </div>
+  )
+}
 
 const ProductCard = ({ product }: { product: ProductWithImagesAndTag }) => {
   return (
@@ -20,6 +40,7 @@ const ProductCard = ({ product }: { product: ProductWithImagesAndTag }) => {
             objectFit="cover"
           />
         )}
+        <ProductDeleteButton productId={product.id} />
       </div>
       <div className="flex flex-col px-2 py-1">
         <h1 className="text-lg font-bold truncate">{product.name}</h1>

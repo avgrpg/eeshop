@@ -1,8 +1,16 @@
 import "server-only";
 import { db } from "./db";
 import { cache } from "react";
+import { auth } from "@clerk/nextjs/server";
+import { productImages, products, productTags } from "./db/schema";
+import { eq } from "drizzle-orm";
+import { redirect } from "next/navigation";
+import { UTApi } from "uploadthing/server";
 
 export const getProductsWithImagesnTags = cache(async () => {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorized");
+
   //   const products = await db.query.products.findMany();
   //   const productsWithImages = await db.query.productImages.findMany();
   //   const productsWithTags = await db.query.productTags.findMany();
@@ -40,3 +48,31 @@ export const getProductsWithImagesnTags = cache(async () => {
 export type ProductWithImagesAndTags = Awaited<
   ReturnType<typeof getProductsWithImagesnTags>
 >;
+
+export const deleteProduct = async (productId: number) => {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorized");
+
+  const deletedProductImages = await db
+    .delete(productImages)
+    .where(eq(productImages.productId, productId))
+    .returning();
+  await db.delete(productTags).where(eq(productTags.productId, productId));
+  await db.delete(products).where(eq(products.id, productId));
+
+  if (deletedProductImages.length === 0) {
+    redirect("/admin/products");
+  }
+  const utapi = new UTApi();
+  await utapi.deleteFiles(
+    deletedProductImages
+      .map((image) => {
+        const imageId = image.url.split("/").pop();
+        if (!imageId) return "";
+        return imageId;
+      })
+      .filter((imageId) => imageId),
+  );
+
+  redirect("/admin/products");
+};
