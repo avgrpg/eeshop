@@ -36,3 +36,7 @@ export const getProductsWithImagesnTags = cache(async () => {
   });
   return productsWithImagesAndTags;
 });
+
+export type ProductWithImagesAndTags = Awaited<
+  ReturnType<typeof getProductsWithImagesnTags>
+>;
