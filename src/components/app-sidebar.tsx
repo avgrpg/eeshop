@@ -38,7 +38,7 @@ const data = {
         },
         {
           title: "Subcategory",
-          url: "#",
+          url: "/admin/categories/sub",
         },
       ],
     },

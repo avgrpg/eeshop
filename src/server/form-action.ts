@@ -2,11 +2,11 @@
 
 import { productFormSchema } from "~/schema/product-form";
 import { db } from "./db";
-import { categories, products, productTags, tags } from "./db/schema";
+import { categories, products, productTags, subcategories, tags } from "./db/schema";
 import { tagFormSchema } from "~/schema/tag-form";
 import { eq } from "drizzle-orm";
 import { auth } from "@clerk/nextjs/server";
-import { categoryFormSchema } from "~/schema/category-form";
+import { categoryFormSchema, subcategoryFormSchema } from "~/schema/category-form";
 
 export type FormState = {
   message: string;
@@ -174,6 +174,69 @@ export const onEditCategoryForm = async (
       description: parsedData.data.description,
     })
     .where(eq(categories.id, categoryId));
+
+  return {
+    message: "Success",
+  };
+}
+
+export const onSubmitSubcategoryForm = async (
+  formData: FormData,
+): Promise<FormState> => {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorized");
+
+  const data = Object.fromEntries(formData);
+  console.log(data);
+  const parsedData = subcategoryFormSchema.safeParse(data);
+
+  console.log(parsedData);
+
+  if (!parsedData.success) {
+    return {
+      message: "Error",
+    };
+  }
+
+  await db
+    .insert(subcategories)
+    .values({
+      name: parsedData.data.name,
+      description: parsedData.data.description,
+      categoryId: parsedData.data.categoryId,
+    })
+  
+  return {
+    message: "Success",
+  };
+};
+
+export const onEditSubcategoryForm = async (
+  subcategoryId: number,
+  formData: FormData,
+): Promise<FormState> => {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorized");
+
+  const data = Object.fromEntries(formData);
+  console.log(data);
+  const parsedData = subcategoryFormSchema.safeParse(data);
+
+  console.log(parsedData);
+
+  if (!parsedData.success) {
+    return {
+      message: "Error",
+    };
+  }
+
+  await db
+    .update(subcategories)
+    .set({
+      name: parsedData.data.name,
+      description: parsedData.data.description,
+    })
+    .where(eq(subcategories.id, subcategoryId));
 
   return {
     message: "Success",
