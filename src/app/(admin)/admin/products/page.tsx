@@ -44,7 +44,7 @@ const ProductCard = ({ product }: { product: ProductWithImagesAndTag }) => {
       <div className="flex flex-col px-2 py-1">
         <h1 className="truncate text-lg font-bold">{product.name}</h1>
         <div className="flex flex-row justify-between gap-2">
-          <p className="text-xl font-medium text-primary">
+          <p className="text-xl font-medium text-primary flex-none">
             <span className="text-xs">$ </span>
             {product.price}
           </p>
@@ -54,7 +54,7 @@ const ProductCard = ({ product }: { product: ProductWithImagesAndTag }) => {
                 {product.tags.map((tag) => (
                   <Badge
                     key={tag?.id}
-                    className="py-px text-xs"
+                    className="py-px text-xs truncate"
                     variant="destructive"
                   >
                     {tag?.name}

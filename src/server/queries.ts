@@ -2,7 +2,7 @@ import "server-only";
 import { db } from "./db";
 import { cache } from "react";
 import { auth } from "@clerk/nextjs/server";
-import { productImages, products, productTags } from "./db/schema";
+import { productImages, products, productTags, tags } from "./db/schema";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { UTApi } from "uploadthing/server";
@@ -112,3 +112,15 @@ export const getProductTags = cache(async () => {
 });
 
 export type Tag = Awaited<ReturnType<typeof getProductTags>>[number];
+
+export const deleteTag = async (tagId: number) => {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorized");
+
+  console.log("deleteTag");
+
+  await db.delete(productTags).where(eq(productTags.tagId, tagId));
+  await db.delete(tags).where(eq(tags.id, tagId));
+
+  redirect("/admin/tags");
+};

@@ -9,6 +9,7 @@ import {
   PieChart,
   Settings2,
   ShoppingBag,
+  SquarePlus,
   SquareTerminal,
 } from "lucide-react"
 
@@ -26,21 +27,17 @@ import {
 const data = {
   navMain: [
     {
-      title: "Playground",
+      title: "Categories",
       url: "#",
-      icon: SquareTerminal,
+      icon: SquarePlus,
       isActive: true,
       items: [
         {
-          title: "History",
+          title: "Parent Category",
           url: "#",
         },
         {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
+          title: "Subcategory",
           url: "#",
         },
       ],
@@ -60,7 +57,7 @@ const data = {
         },
         {
           title: "Tags",
-          url: "#",
+          url: "/admin/tags",
         },
       ],
     },
