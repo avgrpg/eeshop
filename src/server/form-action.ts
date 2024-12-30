@@ -2,10 +2,11 @@
 
 import { productFormSchema } from "~/schema/product-form";
 import { db } from "./db";
-import { products, productTags, tags } from "./db/schema";
+import { categories, products, productTags, tags } from "./db/schema";
 import { tagFormSchema } from "~/schema/tag-form";
 import { eq } from "drizzle-orm";
 import { auth } from "@clerk/nextjs/server";
+import { categoryFormSchema } from "~/schema/category-form";
 
 export type FormState = {
   message: string;
@@ -15,6 +16,9 @@ export const onSubmitProductForm = async (
   //   prevState: FormState,
   formData: FormData,
 ): Promise<FormState> => {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorized");
+
   let data = Object.fromEntries(formData);
   console.log(data);
   if (data.tagIds) {
@@ -87,6 +91,9 @@ export const onEditTagForm = async (
   tagId: number,
   formData: FormData,
 ): Promise<FormState> => {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorized");
+  
   const data = Object.fromEntries(formData);
   console.log(data);
   const parsedData = tagFormSchema.safeParse(data);
@@ -105,6 +112,68 @@ export const onEditTagForm = async (
       name: parsedData.data.name,
     })
     .where(eq(tags.id, tagId));
+
+  return {
+    message: "Success",
+  };
+}
+
+export const onSubmitCategoryForm = async (
+  formData: FormData,
+): Promise<FormState> => {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorized");
+
+  const data = Object.fromEntries(formData);
+  console.log(data);
+  const parsedData = categoryFormSchema.safeParse(data);
+
+  console.log(parsedData);
+
+  if (!parsedData.success) {
+    return {
+      message: "Error",
+    };
+  }
+
+  await db
+    .insert(categories)
+    .values({
+      name: parsedData.data.name,
+      description: parsedData.data.description,
+    })
+  
+  return {
+    message: "Success",
+  };
+};
+
+export const onEditCategoryForm = async (
+  categoryId: number,
+  formData: FormData,
+): Promise<FormState> => {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorized");
+
+  const data = Object.fromEntries(formData);
+  console.log(data);
+  const parsedData = categoryFormSchema.safeParse(data);
+
+  console.log(parsedData);
+
+  if (!parsedData.success) {
+    return {
+      message: "Error",
+    };
+  }
+
+  await db
+    .update(categories)
+    .set({
+      name: parsedData.data.name,
+      description: parsedData.data.description,
+    })
+    .where(eq(categories.id, categoryId));
 
   return {
     message: "Success",

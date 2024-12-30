@@ -15,7 +15,7 @@ import {
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
-import { Tag, type Subcategory } from "~/server/queries";
+import { type Tag, type Subcategory } from "~/server/queries";
 import {
   DropdownMenu,
   DropdownMenuContent,

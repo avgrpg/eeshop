@@ -34,7 +34,7 @@ const data = {
       items: [
         {
           title: "Parent Category",
-          url: "#",
+          url: "/admin/categories",
         },
         {
           title: "Subcategory",
