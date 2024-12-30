@@ -76,3 +76,26 @@ export const deleteProduct = async (productId: number) => {
 
   redirect("/admin/products");
 };
+
+export const getProductCategories = cache(async () => {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorized");
+
+  console.log("getProductCategories");
+
+  const categories = await db.query.categories.findMany();
+  const subcategories = await db.query.subcategories.findMany();
+
+  return {
+    categories,
+    subcategories: subcategories.map((subcategory) => {
+      return {
+        ...subcategory,
+        category: categories.find((category) => category.id === subcategory.categoryId),
+      };
+    }),
+  };
+});
+
+export type Category = Awaited<ReturnType<typeof getProductCategories>>["categories"][number];
+export type Subcategory = Awaited<ReturnType<typeof getProductCategories>>["subcategories"][number];
