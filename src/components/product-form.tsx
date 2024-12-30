@@ -15,7 +15,7 @@ import {
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
-import { type Subcategory } from "~/server/queries";
+import { Tag, type Subcategory } from "~/server/queries";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -134,20 +134,103 @@ const ProductCategoryCombobox = ({
   );
 };
 
+const ProductTagCombobox = ({
+  tags,
+  form,
+}: {
+  form: UseFormReturn<z.infer<typeof productFormSchema>>;
+  tags: Tag[];
+}) => {
+  return (
+    <FormField
+      control={form.control}
+      name="tagIds"
+      render={({ field }) => (
+        <FormItem className="flex flex-col gap-1">
+          <FormLabel>Tags</FormLabel>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <FormControl>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  className={cn(
+                    "w-[200px] justify-between",
+                    field.value?.length === 0 && "text-muted-foreground",
+                  )}
+                >
+                  {field.value?.length === 0
+                    ? "Select a tag"
+                    : field.value
+                        ?.map(
+                          (tagId) => tags.find((tag) => tag.id === tagId)?.name,
+                        )
+                        .join(", ")}
+                </Button>
+              </FormControl>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <Command>
+                <CommandInput placeholder="Search tags" className="h-9" />
+                <CommandList>
+                  {tags.map((tag) => (
+                    <CommandItem
+                      key={tag.id}
+                      value={`${tag.id}`}
+                      keywords={[tag.name]}
+                      onSelect={() => {
+                        if (field.value?.includes(tag.id)) {
+                          return field.onChange(
+                            field.value.filter((id) => id !== tag.id),
+                          );
+                        }
+                        if (!field.value) {
+                          return field.onChange([tag.id]);
+                        }
+                        field.onChange([...field.value, tag.id]);
+                      }}
+                    >
+                      {tag.name}
+                      <Check
+                        className={cn(
+                          "ml-auto",
+                          field.value?.includes(tag.id)
+                            ? "opacity-100"
+                            : "opacity-0",
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
+                </CommandList>
+              </Command>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <FormDescription>This is the tags of your product.</FormDescription>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
+};
+
 const ProductForm = ({
   subcategories,
   handleClose,
+  tags,
 }: {
   subcategories: Subcategory[];
   handleClose: () => void;
+  tags: Tag[];
 }) => {
-    const router = useRouter();
+  const router = useRouter();
   const form = useForm<z.infer<typeof productFormSchema>>({
     resolver: zodResolver(productFormSchema),
     defaultValues: {
       name: "",
       price: 0,
       description: "",
+      subcategoryId: undefined,
+      tagIds: [],
     },
   });
 
@@ -161,12 +244,13 @@ const ProductForm = ({
     formData.append("price", data.price.toString());
     formData.append("description", data.description);
     formData.append("subcategoryId", data.subcategoryId.toString());
+    formData.append("tagIds", JSON.stringify(data.tagIds));
 
     const result = await onSubmitProductForm(formData);
 
     toast.dismiss("submit-product");
     if (result.message === "Success") {
-        router.push("/admin/products");
+      router.push("/admin/products");
       handleClose();
       return toast.success("Successfully submitted!");
     }
@@ -248,6 +332,7 @@ const ProductForm = ({
           )}
         />
         <ProductCategoryCombobox form={form} subcategories={subcategories} />
+        <ProductTagCombobox form={form} tags={tags} />
         <Button type="submit">Submit</Button>
       </form>
     </Form>
@@ -256,8 +341,10 @@ const ProductForm = ({
 
 export const AddProductDialog = ({
   subcategories,
+  tags,
 }: {
   subcategories: Subcategory[];
+  tags: Tag[];
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -280,7 +367,11 @@ export const AddProductDialog = ({
             * Required fields are marked with an asterisk
           </DialogDescription>
         </DialogHeader>
-        <ProductForm subcategories={subcategories} handleClose={handleClose} />
+        <ProductForm
+          subcategories={subcategories}
+          handleClose={handleClose}
+          tags={tags}
+        />
       </DialogContent>
     </Dialog>
   );

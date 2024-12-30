@@ -99,3 +99,16 @@ export const getProductCategories = cache(async () => {
 
 export type Category = Awaited<ReturnType<typeof getProductCategories>>["categories"][number];
 export type Subcategory = Awaited<ReturnType<typeof getProductCategories>>["subcategories"][number];
+
+export const getProductTags = cache(async () => {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorized");
+
+  console.log("getProductTags");
+
+  const tagsData = db.query.tags.findMany();
+
+  return tagsData;
+});
+
+export type Tag = Awaited<ReturnType<typeof getProductTags>>[number];

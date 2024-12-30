@@ -2,7 +2,7 @@ import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import { AddProductDialog } from "~/components/product-form";
 import { Badge } from "~/components/ui/badge";
-import { deleteProduct, getProductCategories, getProductsWithImagesnTags } from "~/server/queries";
+import { deleteProduct, getProductCategories, getProductsWithImagesnTags, getProductTags } from "~/server/queries";
 
 import type { ProductWithImagesAndTags } from "~/server/queries";
 
@@ -71,9 +71,15 @@ const ProductCard = ({ product }: { product: ProductWithImagesAndTag }) => {
 };
 
 const ProductAddButton = async () => {
-  const { subcategories } = await getProductCategories();
+  // const { subcategories } = await getProductCategories();
+
+  const [{subcategories}, tags] = await Promise.all([
+    getProductCategories(),
+    getProductTags(),
+  ]);
+
   return (
-    <AddProductDialog subcategories={subcategories} />
+    <AddProductDialog subcategories={subcategories} tags={tags} />
     // <Dialog>
     //   <DialogTrigger asChild>
     //     <Button variant="outline" className="flex items-center gap-2">
@@ -102,13 +108,15 @@ export default async function ProductsPage() {
   // const { categories, subcategories } = await getProductCategories();
   // console.log(categories, subcategories);
 
-  const [products, { categories, subcategories }] = await Promise.all([
+  const [products, { categories, subcategories }, tags] = await Promise.all([
     getProductsWithImagesnTags(),
     getProductCategories(),
+    getProductTags(),
   ]);
   console.log("products", products);
   console.log("categories", categories);
   console.log("subcategories", subcategories);
+  console.log("tags", tags);
 
   return (
     <div className="flex flex-1 flex-col gap-2 p-2">
