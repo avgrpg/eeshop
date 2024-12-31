@@ -277,7 +277,7 @@ const ProductForm = ({
 
     toast.dismiss("submit-product");
     if (result.message === "Success") {
-      router.push("/admin/products");
+      router.refresh();
       handleClose();
       return toast.success(
         `Successfully ${mode === "edit" ? "edited" : "added"} product!`,

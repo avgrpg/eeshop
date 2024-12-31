@@ -63,7 +63,7 @@ const TagForm = ({
 
     toast.dismiss("submit-tag");
     if (result.message === "Success") {
-      router.push("/admin/tags");
+      router.refresh();
       handleClose();
       return toast.success(
         `Successfully ${mode === "edit" ? "edited" : "added"} tag!`,

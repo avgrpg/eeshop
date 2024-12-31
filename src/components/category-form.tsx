@@ -61,7 +61,7 @@ const CategoryForm = ({
         : await onSubmitCategoryForm(formData);
 
     if (result.message === "Success") {
-      router.push("/admin/categories");
+      router.refresh();
       handleClose();
       return toast.success(
         `Successfully ${mode === "edit" ? "edited" : "added"} category!`,
