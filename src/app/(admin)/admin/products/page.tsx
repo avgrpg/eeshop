@@ -1,12 +1,19 @@
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
-import { AddProductDialog } from "~/components/product-form";
+import { AddProductDialog, ProductEditButton } from "~/components/product-form";
 import { Badge } from "~/components/ui/badge";
-import { deleteProduct, getProductCategories, getProductsWithImagesnTags, getProductTags } from "~/server/queries";
+import {
+  deleteProduct,
+  getProductCategories,
+  getProductsWithImagesnTags,
+  getProductTags,
+} from "~/server/queries";
 
-import type { ProductWithImagesAndTags } from "~/server/queries";
-
-type ProductWithImagesAndTag = ProductWithImagesAndTags[number];
+import type {
+  ProductWithImagesAndTags,
+  Subcategory,
+  Tag,
+} from "~/server/queries";
 
 const ProductDeleteButton = ({ productId }: { productId: number }) => {
   return (
@@ -25,7 +32,15 @@ const ProductDeleteButton = ({ productId }: { productId: number }) => {
   );
 };
 
-const ProductCard = ({ product }: { product: ProductWithImagesAndTag }) => {
+const ProductCard = ({
+  product,
+  tags,
+  subcategories,
+}: {
+  product: ProductWithImagesAndTags;
+  tags: Tag[];
+  subcategories: Subcategory[];
+}) => {
   return (
     <div className="group relative h-56 overflow-hidden rounded-lg bg-background shadow-lg transition duration-300 hover:shadow-xl">
       <div className="relative h-40 overflow-hidden bg-primary/20">
@@ -40,11 +55,12 @@ const ProductCard = ({ product }: { product: ProductWithImagesAndTag }) => {
             sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
           />
         )}
+        <ProductEditButton product={product} subcategories={subcategories} tags={tags} />
       </div>
       <div className="flex flex-col px-2 py-1">
         <h1 className="truncate text-lg font-bold">{product.name}</h1>
         <div className="flex flex-row justify-between gap-2">
-          <p className="text-xl font-medium text-primary flex-none">
+          <p className="flex-none text-xl font-medium text-primary">
             <span className="text-xs">$ </span>
             {product.price}
           </p>
@@ -54,7 +70,7 @@ const ProductCard = ({ product }: { product: ProductWithImagesAndTag }) => {
                 {product.tags.map((tag) => (
                   <Badge
                     key={tag?.id}
-                    className="py-px text-xs truncate"
+                    className="truncate py-px text-xs"
                     variant="destructive"
                   >
                     {tag?.name}
@@ -73,7 +89,7 @@ const ProductCard = ({ product }: { product: ProductWithImagesAndTag }) => {
 const ProductAddButton = async () => {
   // const { subcategories } = await getProductCategories();
 
-  const [{subcategories}, tags] = await Promise.all([
+  const [{ subcategories }, tags] = await Promise.all([
     getProductCategories(),
     getProductTags(),
   ]);
@@ -126,7 +142,12 @@ export default async function ProductsPage() {
       <ProductAddButton />
       <div className="grid flex-1 grid-cols-2 content-start gap-2 rounded-lg bg-muted/70 p-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard
+            key={product.id}
+            product={product}
+            tags={tags}
+            subcategories={subcategories}
+          />
         ))}
       </div>
     </div>

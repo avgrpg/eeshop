@@ -47,7 +47,7 @@ export const getProductsWithImagesnTags = cache(async () => {
 
 export type ProductWithImagesAndTags = Awaited<
   ReturnType<typeof getProductsWithImagesnTags>
->;
+>[number];
 
 export const deleteProduct = async (productId: number) => {
   const user = await auth();

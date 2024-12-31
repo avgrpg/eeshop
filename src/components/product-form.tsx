@@ -22,7 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { cn } from "~/lib/utils";
-import { Check, ChevronsUpDown, Plus } from "lucide-react";
+import { Check, ChevronsUpDown, Pen, Plus } from "lucide-react";
 import {
   Command,
   CommandEmpty,
@@ -40,7 +40,7 @@ import {
 // });
 
 import { productFormSchema } from "~/schema/product-form";
-import { onSubmitProductForm } from "~/server/form-action";
+import { onEditProductForm, onSubmitProductForm } from "~/server/form-action";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import {
@@ -213,24 +213,48 @@ const ProductTagCombobox = ({
   );
 };
 
+type ProductType = {
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+  subcategoryId: number;
+  tags: (
+    | {
+        id: number;
+        name: string;
+      }
+    | undefined
+  )[];
+};
+
 const ProductForm = ({
   subcategories,
   handleClose,
   tags,
+  mode,
+  product,
 }: {
   subcategories: Subcategory[];
   handleClose: () => void;
   tags: Tag[];
+  mode: "edit" | "add";
+  product: ProductType;
 }) => {
   const router = useRouter();
   const form = useForm<z.infer<typeof productFormSchema>>({
     resolver: zodResolver(productFormSchema),
     defaultValues: {
-      name: "",
-      price: 0,
-      description: "",
-      subcategoryId: undefined,
-      tagIds: [],
+      // name: "",
+      // price: 0,
+      // description: "",
+      // subcategoryId: undefined,
+      // tagIds: [],
+      name: product.name,
+      price: product.price,
+      description: product.description,
+      subcategoryId: product.subcategoryId,
+      tagIds: product.tags.length > 0 ? product.tags.map((tag) => tag?.id) : [],
     },
   });
 
@@ -246,13 +270,18 @@ const ProductForm = ({
     formData.append("subcategoryId", data.subcategoryId.toString());
     formData.append("tagIds", JSON.stringify(data.tagIds));
 
-    const result = await onSubmitProductForm(formData);
+    const result =
+      mode === "edit"
+        ? await onEditProductForm(product.id, formData)
+        : await onSubmitProductForm(formData);
 
     toast.dismiss("submit-product");
     if (result.message === "Success") {
       router.push("/admin/products");
       handleClose();
-      return toast.success("Successfully submitted!");
+      return toast.success(
+        `Successfully ${mode === "edit" ? "edited" : "added"} product!`,
+      );
     }
     toast.error("Something went wrong!");
   };
@@ -339,6 +368,56 @@ const ProductForm = ({
   );
 };
 
+export const ProductEditButton = ({
+  product,
+  subcategories,
+  tags,
+}: {
+  product: ProductType;
+  subcategories: Subcategory[];
+  tags: Tag[];
+}) => {
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <button className="flex h-6 items-center justify-center gap-2 rounded-lg text-foreground bg-background border-foreground border-2 px-2 transition-colors duration-200 hover:bg-foreground hover:text-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 absolute top-2 left-2">
+          <Pen size={16} />
+          <span>Edit</span>
+        </button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Edit Product</DialogTitle>
+          <DialogDescription className="sr-only">
+            edit product name
+          </DialogDescription>
+        </DialogHeader>
+        <ProductForm
+          product={product}
+          handleClose={handleClose}
+          mode="edit"
+          subcategories={subcategories}
+          tags={tags}
+        />
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+const defaultProduct = {
+  id: 0,
+  name: "",
+  price: 0,
+  description: "",
+  subcategoryId: 0,
+  tags: [],
+};
 export const AddProductDialog = ({
   subcategories,
   tags,
@@ -371,6 +450,8 @@ export const AddProductDialog = ({
           subcategories={subcategories}
           handleClose={handleClose}
           tags={tags}
+          mode="add"
+          product={defaultProduct}
         />
       </DialogContent>
     </Dialog>

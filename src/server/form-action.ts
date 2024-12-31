@@ -58,6 +58,53 @@ export const onSubmitProductForm = async (
   };
 };
 
+export const onEditProductForm = async (
+  productId: number,
+  formData: FormData,
+): Promise<FormState> => {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorized");
+
+  const data = Object.fromEntries(formData);
+  console.log(data);
+  if (data.tagIds) {
+    data.tagIds = JSON.parse(data.tagIds);
+  }
+  const parsedData = productFormSchema.safeParse(data);
+
+  console.log(parsedData);
+
+  if (!parsedData.success) {
+    return {
+      message: "Error",
+    };
+  }
+
+  await db
+    .update(products)
+    .set({
+      name: parsedData.data.name,
+      price: parsedData.data.price,
+      description: parsedData.data.description,
+      subcategoryId: parsedData.data.subcategoryId,
+    })
+    .where(eq(products.id, productId));
+
+    if (parsedData.data.tagIds) {
+      await db.delete(productTags).where(eq(productTags.productId, productId));
+      await db.insert(productTags).values(
+        parsedData.data.tagIds.map((tagId) => ({
+          productId: productId,
+          tagId,
+        })),
+      );
+    }
+
+  return {
+    message: "Success",
+  };
+};
+
 export const onSubmitTagForm = async (
   formData: FormData,
 ): Promise<FormState> => {
