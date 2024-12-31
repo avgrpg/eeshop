@@ -61,7 +61,7 @@ const PrimaryCategoryCombobox = ({
       name="categoryId"
       render={({ field }) => (
         <FormItem className="flex flex-col gap-1">
-          <FormLabel>Subcategory</FormLabel>
+          <FormLabel>Category</FormLabel>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <FormControl>
@@ -76,7 +76,7 @@ const PrimaryCategoryCombobox = ({
                   {field.value
                     ? categories.find((category) => category.id === field.value)
                         ?.name
-                    : "Select a subcategory"}
+                    : "Select a category"}
                   <ChevronsUpDown className="opacity-50" />
                 </Button>
               </FormControl>
@@ -88,7 +88,7 @@ const PrimaryCategoryCombobox = ({
                   className="h-9"
                 />
                 <CommandList>
-                  <CommandEmpty>No subcategories found.</CommandEmpty>
+                  <CommandEmpty>No categories found.</CommandEmpty>
                   <CommandGroup>
                     {categories.map((category) => (
                       <CommandItem
@@ -116,7 +116,7 @@ const PrimaryCategoryCombobox = ({
             </DropdownMenuContent>
           </DropdownMenu>
           <FormDescription>
-            This is the subcategory of your product.
+            This is the category.
           </FormDescription>
           <FormMessage />
         </FormItem>
