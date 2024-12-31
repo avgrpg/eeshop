@@ -2,11 +2,23 @@
 
 import { productFormSchema } from "~/schema/product-form";
 import { db } from "./db";
-import { categories, products, productTags, subcategories, tags } from "./db/schema";
+import {
+  categories,
+  productImages,
+  products,
+  productTags,
+  subcategories,
+  tags,
+} from "./db/schema";
 import { tagFormSchema } from "~/schema/tag-form";
 import { eq } from "drizzle-orm";
 import { auth } from "@clerk/nextjs/server";
-import { categoryFormSchema, subcategoryFormSchema } from "~/schema/category-form";
+import {
+  categoryFormSchema,
+  subcategoryFormSchema,
+} from "~/schema/category-form";
+import { redirect } from "next/navigation";
+import { UTApi } from "uploadthing/server";
 
 export type FormState = {
   message: string;
@@ -90,15 +102,47 @@ export const onEditProductForm = async (
     })
     .where(eq(products.id, productId));
 
-    if (parsedData.data.tagIds) {
-      await db.delete(productTags).where(eq(productTags.productId, productId));
-      await db.insert(productTags).values(
-        parsedData.data.tagIds.map((tagId) => ({
-          productId: productId,
-          tagId,
-        })),
-      );
-    }
+  if (parsedData.data.tagIds) {
+    await db.delete(productTags).where(eq(productTags.productId, productId));
+    await db.insert(productTags).values(
+      parsedData.data.tagIds.map((tagId) => ({
+        productId: productId,
+        tagId,
+      })),
+    );
+  }
+
+  return {
+    message: "Success",
+  };
+};
+
+export const deleteProductImage = async (
+  imageId: number,
+): Promise<FormState> => {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorized");
+
+  const deletedImage = await db
+    .delete(productImages)
+    .where(eq(productImages.id, imageId))
+    .returning();
+
+  if (deletedImage.length === 0) {
+    return {
+      message: "Error",
+    };
+  }
+  const utapi = new UTApi();
+  await utapi.deleteFiles(
+    deletedImage
+      .map((image) => {
+        const imageId = image.url.split("/").pop();
+        if (!imageId) return "";
+        return imageId;
+      })
+      .filter((imageId) => imageId),
+  );
 
   return {
     message: "Success",
@@ -123,12 +167,10 @@ export const onSubmitTagForm = async (
     };
   }
 
-  await db
-    .insert(tags)
-    .values({
-      name: parsedData.data.name,
-    })
-  
+  await db.insert(tags).values({
+    name: parsedData.data.name,
+  });
+
   return {
     message: "Success",
   };
@@ -140,7 +182,7 @@ export const onEditTagForm = async (
 ): Promise<FormState> => {
   const user = await auth();
   if (!user.userId) throw new Error("Unauthorized");
-  
+
   const data = Object.fromEntries(formData);
   console.log(data);
   const parsedData = tagFormSchema.safeParse(data);
@@ -163,7 +205,7 @@ export const onEditTagForm = async (
   return {
     message: "Success",
   };
-}
+};
 
 export const onSubmitCategoryForm = async (
   formData: FormData,
@@ -183,13 +225,11 @@ export const onSubmitCategoryForm = async (
     };
   }
 
-  await db
-    .insert(categories)
-    .values({
-      name: parsedData.data.name,
-      description: parsedData.data.description,
-    })
-  
+  await db.insert(categories).values({
+    name: parsedData.data.name,
+    description: parsedData.data.description,
+  });
+
   return {
     message: "Success",
   };
@@ -225,7 +265,7 @@ export const onEditCategoryForm = async (
   return {
     message: "Success",
   };
-}
+};
 
 export const onSubmitSubcategoryForm = async (
   formData: FormData,
@@ -245,14 +285,12 @@ export const onSubmitSubcategoryForm = async (
     };
   }
 
-  await db
-    .insert(subcategories)
-    .values({
-      name: parsedData.data.name,
-      description: parsedData.data.description,
-      categoryId: parsedData.data.categoryId,
-    })
-  
+  await db.insert(subcategories).values({
+    name: parsedData.data.name,
+    description: parsedData.data.description,
+    categoryId: parsedData.data.categoryId,
+  });
+
   return {
     message: "Success",
   };
@@ -288,4 +326,4 @@ export const onEditSubcategoryForm = async (
   return {
     message: "Success",
   };
-}
+};

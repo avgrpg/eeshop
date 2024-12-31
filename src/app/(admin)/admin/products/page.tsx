@@ -1,6 +1,7 @@
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import { AddProductDialog, ProductEditButton } from "~/components/product-form";
+import { ProductImageManager } from "~/components/product-image-manager";
 import { Badge } from "~/components/ui/badge";
 import {
   deleteProduct,
@@ -55,7 +56,16 @@ const ProductCard = ({
             sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
           />
         )}
-        <ProductEditButton product={product} subcategories={subcategories} tags={tags} />
+        <ProductEditButton
+          product={product}
+          subcategories={subcategories}
+          tags={tags}
+        />
+        <ProductImageManager
+          productId={product.id}
+          images={product.images}
+          className="absolute left-2 top-10"
+        />
       </div>
       <div className="flex flex-col px-2 py-1">
         <h1 className="truncate text-lg font-bold">{product.name}</h1>

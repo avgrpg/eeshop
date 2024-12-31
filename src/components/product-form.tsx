@@ -386,10 +386,10 @@ export const ProductEditButton = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button className="flex h-6 items-center justify-center gap-2 rounded-lg text-foreground bg-background border-foreground border-2 px-2 transition-colors duration-200 hover:bg-foreground hover:text-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 absolute top-2 left-2">
+        <Button className="absolute top-2 left-2" variant="outline" size="xs">
           <Pen size={16} />
           <span>Edit</span>
-        </button>
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
