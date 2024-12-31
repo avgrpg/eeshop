@@ -163,7 +163,7 @@ const SubcategoryForm = ({
         : await onSubmitSubcategoryForm(formData);
 
     if (result.message === "Success") {
-      router.push("/admin/categories/sub");
+      router.refresh();
       handleClose();
       return toast.success(
         `Successfully ${mode === "edit" ? "edited" : "added"} subcategory!`,
