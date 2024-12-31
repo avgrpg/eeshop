@@ -28,7 +28,6 @@ export const ProductImageManager = ({
   images: ProductWithImagesAndTags["images"];
   className: string;
 }) => {
-  console.log(images);
   const router = useRouter();
   return (
     <Dialog>
@@ -43,8 +42,8 @@ export const ProductImageManager = ({
       >
         <DialogHeader>
           <DialogTitle>Manage Images</DialogTitle>
-          <DialogDescription className="sr-only">
-            manage product images
+          <DialogDescription className="">
+            After choosing images, please click the upload again to start uploading
           </DialogDescription>
         </DialogHeader>
         <section className="grid grid-cols-3 gap-2">
