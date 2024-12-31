@@ -50,13 +50,15 @@ export const ProductImageManager = ({
         <section className="grid grid-cols-3 gap-2">
           {images.map((image) => (
             <div key={image.url} className="flex flex-col gap-2">
-              <Image
-                src={image.url}
-                alt={image.url}
-                className="w-40 rounded-lg"
-                width="160"
-                height="160"
-              />
+              <a href={image.url} target="_blank" rel="noreferrer">
+                <Image
+                  src={image.url}
+                  alt={image.url}
+                  className="w-40 rounded-lg"
+                  width="160"
+                  height="160"
+                />
+              </a>
               <ProductImageDeleteButton imageId={image.id} />
             </div>
           ))}
