@@ -24,6 +24,7 @@ export const categories = createTable("category", {
   id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
   name: varchar("name", { length: 256 }).notNull().unique(),
   description: text("description").notNull(),
+  imageUrl: text("image_url"),
 });
 
 export const subcategories = createTable("subcategory", {

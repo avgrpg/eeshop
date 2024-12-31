@@ -1,9 +1,10 @@
 import { auth } from "@clerk/nextjs/server";
+import { eq } from "drizzle-orm";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 import { z } from "zod";
 import { db } from "~/server/db";
-import { productImages } from "~/server/db/schema";
+import { categories, productImages } from "~/server/db/schema";
 
 const f = createUploadthing();
 
@@ -48,6 +49,49 @@ export const ourFileRouter = {
         productId: productId.data,
         url: file.url,
       });
+
+      // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
+      return { uploadedBy: metadata.userId };
+    }),
+  categoryImageUploader: f({
+    image: {
+      /**
+       * For full list of options and defaults, see the File Route API reference
+       * @see https://docs.uploadthing.com/file-routes#route-config
+       */
+      maxFileSize: "4MB",
+      maxFileCount: 1,
+    },
+  })
+    .middleware(async ({ req }) => {
+      // This code runs on your server before upload
+      const user = await auth();
+
+      // If you throw, the user will not be able to upload
+      if (!user?.userId) throw new UploadThingError("Unauthorized") as Error;
+
+      // Whatever is returned here is accessible in onUploadComplete as `metadata`
+      return { userId: user.userId, categoryId: req.headers.get("categoryId") };
+    })
+    .onUploadComplete(async ({ metadata, file }) => {
+      // This code RUNS ON YOUR SERVER after upload
+      console.log("Upload complete for userId:", metadata);
+
+      console.log("file url", file);
+
+      if (!metadata.categoryId)
+        throw new UploadThingError("Category ID is required") as Error;
+
+      const categoryId = z.coerce.number().safeParse(metadata.categoryId);
+      if (!categoryId.success)
+        throw new UploadThingError("Category ID is required") as Error;
+
+      await db
+        .update(categories)
+        .set({
+          imageUrl: file.url,
+        })
+        .where(eq(categories.id, categoryId.data));
 
       // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
       return { uploadedBy: metadata.userId };

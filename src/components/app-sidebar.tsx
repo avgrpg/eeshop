@@ -2,15 +2,8 @@
 
 import * as React from "react"
 import {
-  BookOpen,
-  Bot,
-  Frame,
-  Map,
-  PieChart,
-  Settings2,
   ShoppingBag,
   SquarePlus,
-  SquareTerminal,
 } from "lucide-react"
 
 import { NavMain } from "~/components/nav-main"
@@ -27,6 +20,22 @@ import {
 const data = {
   navMain: [
     {
+      title: "Products",
+      url: "#",
+      icon: ShoppingBag,
+      isActive: true,
+      items: [
+        {
+          title: "Overview",
+          url: "/admin/products",
+        },
+        {
+          title: "Tags",
+          url: "/admin/tags",
+        },
+      ],
+    },
+    {
       title: "Categories",
       url: "#",
       icon: SquarePlus,
@@ -41,88 +50,6 @@ const data = {
           url: "/admin/categories/sub",
         },
       ],
-    },
-    {
-      title: "Products",
-      url: "#",
-      icon: ShoppingBag,
-      items: [
-        {
-          title: "Overview",
-          url: "/admin/products",
-        },
-        {
-          title: "Images",
-          url: "#",
-        },
-        {
-          title: "Tags",
-          url: "/admin/tags",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
     },
   ],
 }

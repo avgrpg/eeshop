@@ -2,7 +2,6 @@ import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import { AddProductDialog, ProductEditButton } from "~/components/product-form";
 import { ProductImageManager } from "~/components/product-image-manager";
-import { Badge } from "~/components/ui/badge";
 import {
   deleteProduct,
   getProductCategories,
