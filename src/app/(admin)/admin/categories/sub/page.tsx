@@ -1,12 +1,29 @@
+import { Trash2 } from "lucide-react";
 import {
   SubcategoryAddButton,
   SubcategoryEditButton,
 } from "~/components/subcategory-form";
 import {
   type Category,
+  deleteSubcategory,
   getProductCategories,
   type Subcategory,
 } from "~/server/queries";
+
+const SubcategoryDeleteButton = ({ subcategoryId }: { subcategoryId: number }) => {
+  return (
+    <form
+      action={async () => {
+        "use server";
+        await deleteSubcategory(subcategoryId);
+      }}
+    >
+      <button className="flex h-6 w-6 items-center justify-center rounded-full text-destructive transition-colors duration-200 hover:bg-destructive/10 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+        <Trash2 size={16} />
+      </button>
+    </form>
+  );
+};
 
 const SubCategoryItem = ({
   subcategory,
@@ -33,6 +50,8 @@ const SubCategoryItem = ({
         subcategory={subcategory}
         categories={categories}
       />
+
+      <SubcategoryDeleteButton subcategoryId={subcategory.id} />
     </li>
   );
 };

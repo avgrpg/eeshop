@@ -2,14 +2,20 @@ import "server-only";
 import { db } from "./db";
 import { cache } from "react";
 import { auth } from "@clerk/nextjs/server";
-import { productImages, products, productTags, tags } from "./db/schema";
-import { eq } from "drizzle-orm";
+import {
+  productImages,
+  products,
+  productTags,
+  subcategories,
+  tags,
+} from "./db/schema";
+import { eq, inArray } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { UTApi } from "uploadthing/server";
 
 export const getProductsWithImagesnTags = cache(async () => {
-  const user = await auth();
-  if (!user.userId) throw new Error("Unauthorized");
+  // const user = await auth();
+  // if (!user.userId) throw new Error("Unauthorized");
 
   //   const products = await db.query.products.findMany();
   //   const productsWithImages = await db.query.productImages.findMany();
@@ -78,8 +84,8 @@ export const deleteProduct = async (productId: number) => {
 };
 
 export const getProductCategories = cache(async () => {
-  const user = await auth();
-  if (!user.userId) throw new Error("Unauthorized");
+  // const user = await auth();
+  // if (!user.userId) throw new Error("Unauthorized");
 
   console.log("getProductCategories");
 
@@ -91,14 +97,69 @@ export const getProductCategories = cache(async () => {
     subcategories: subcategories.map((subcategory) => {
       return {
         ...subcategory,
-        category: categories.find((category) => category.id === subcategory.categoryId),
+        category: categories.find(
+          (category) => category.id === subcategory.categoryId,
+        ),
       };
     }),
   };
 });
 
-export type Category = Awaited<ReturnType<typeof getProductCategories>>["categories"][number];
-export type Subcategory = Awaited<ReturnType<typeof getProductCategories>>["subcategories"][number];
+export type Category = Awaited<
+  ReturnType<typeof getProductCategories>
+>["categories"][number];
+export type Subcategory = Awaited<
+  ReturnType<typeof getProductCategories>
+>["subcategories"][number];
+
+export const deleteSubcategory = async (subcategoryId: number) => {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorized");
+
+  console.log("deleteSubcategory");
+
+  // find all products with this subcategoryId
+  const allAffectedProducts = await db.query.products.findMany({
+    where: eq(products.subcategoryId, subcategoryId),
+    columns: {
+      id: true,
+    },
+  });
+  // delete all producttags with this subcategoryId
+  await db.delete(productTags).where(
+    inArray(
+      productTags.productId,
+      allAffectedProducts.map((product) => product.id),
+    ),
+  );
+  //delete all productImages with this subcategoryId
+  const deletedProductImages = await db
+    .delete(productImages)
+    .where(
+      inArray(
+        productImages.productId,
+        allAffectedProducts.map((product) => product.id),
+      ),
+    )
+    .returning();
+  if (deletedProductImages.length > 0) {
+    const utapi = new UTApi();
+    await utapi.deleteFiles(
+      deletedProductImages
+        .map((image) => {
+          const imageId = image.url.split("/").pop();
+          if (!imageId) return "";
+          return imageId;
+        })
+        .filter((imageId) => imageId),
+    );
+  }
+
+  await db.delete(products).where(eq(products.subcategoryId, subcategoryId));
+  await db.delete(subcategories).where(eq(subcategories.id, subcategoryId));
+
+  redirect("/admin/categories/sub");
+};
 
 export const getProductTags = cache(async () => {
   const user = await auth();
