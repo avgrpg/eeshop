@@ -1,10 +1,16 @@
 import "@uploadthing/react/styles.css";
 import "~/styles/globals.css";
 
-import { GeistSans } from "geist/font/sans";
+import { Rubik } from "next/font/google";
 import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
+import { TopNav } from "~/components/top-nav";
+
+const rubik = Rubik({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   title: "EE Shop HK",
@@ -17,8 +23,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`${GeistSans.variable}`}>
-        <body>{children}
+      <html lang="en">
+        <body
+          className={`font-sans ${rubik.variable} grid h-screen grid-rows-[auto,1fr] antialiased`}
+        >
+          <TopNav />
+          {children}
           <Toaster />
         </body>
       </html>

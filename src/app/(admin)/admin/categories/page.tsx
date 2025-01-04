@@ -5,7 +5,6 @@ import {
 } from "~/components/category-form";
 import { CategoryUploadButton } from "~/components/category-upload-button";
 import { type Category, getProductCategories } from "~/server/queries";
-import { UploadButton } from "~/utils/uploadthing";
 
 const CategoryItem = ({ category }: { category: Category }) => {
   return (
