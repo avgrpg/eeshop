@@ -18,6 +18,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ProductImageDeleteButton } from "./product-image-delete";
+import { revalidateServerAction } from "~/server/form-action";
 
 export const ProductImageManager = ({
   productId,
@@ -70,10 +71,11 @@ export const ProductImageManager = ({
               id: "upload-image",
             });
           }}
-          onClientUploadComplete={(res) => {
+          onClientUploadComplete={async(res) => {
             console.log(res);
             toast.dismiss("upload-image");
             toast.success("Successfully uploaded!");
+            await revalidateServerAction("products");
             router.refresh();
           }}
           onUploadError={(error: Error) => {

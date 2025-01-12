@@ -155,15 +155,15 @@ export default async function ProductsPage() {
   // const { categories, subcategories } = await getProductCategories();
   // console.log(categories, subcategories);
 
-  const [products, { categories, subcategories }, tags] = await Promise.all([
+  const [products, { subcategories }, tags] = await Promise.all([
     getProductsWithImagesnTags(),
     getProductCategories(),
     getProductTags(),
   ]);
-  console.log("products", products);
-  console.log("categories", categories);
-  console.log("subcategories", subcategories);
-  console.log("tags", tags);
+  // console.log("products", products);
+  // console.log("categories", categories);
+  // console.log("subcategories", subcategories);
+  // console.log("tags", tags);
 
   return (
     <div className="flex flex-1 flex-col gap-2 p-2">

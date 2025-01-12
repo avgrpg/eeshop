@@ -19,9 +19,14 @@ import {
 } from "~/schema/category-form";
 import { redirect } from "next/navigation";
 import { UTApi } from "uploadthing/server";
+import { revalidateTag } from "next/cache";
 
 export type FormState = {
   message: string;
+};
+
+export const revalidateServerAction = async (tag: string) => {
+  revalidateTag(tag);
 };
 
 export const onSubmitProductForm = async (
@@ -65,6 +70,7 @@ export const onSubmitProductForm = async (
     );
   }
 
+  revalidateTag("products");
   return {
     message: "Success",
   };
@@ -112,6 +118,7 @@ export const onEditProductForm = async (
     );
   }
 
+  revalidateTag("products");
   return {
     message: "Success",
   };
@@ -144,6 +151,7 @@ export const deleteProductImage = async (
       .filter((imageId) => imageId),
   );
 
+  revalidateTag("productImages");
   return {
     message: "Success",
   };
@@ -171,6 +179,7 @@ export const onSubmitTagForm = async (
     name: parsedData.data.name,
   });
 
+  revalidateTag("tags");
   return {
     message: "Success",
   };
@@ -202,6 +211,7 @@ export const onEditTagForm = async (
     })
     .where(eq(tags.id, tagId));
 
+  revalidateTag("tags");
   return {
     message: "Success",
   };
@@ -230,6 +240,7 @@ export const onSubmitCategoryForm = async (
     description: parsedData.data.description,
   });
 
+  revalidateTag("categories");
   return {
     message: "Success",
   };
@@ -262,6 +273,7 @@ export const onEditCategoryForm = async (
     })
     .where(eq(categories.id, categoryId));
 
+  revalidateTag("categories");
   return {
     message: "Success",
   };
@@ -291,6 +303,7 @@ export const onSubmitSubcategoryForm = async (
     categoryId: parsedData.data.categoryId,
   });
 
+  revalidateTag("subcategories");
   return {
     message: "Success",
   };
@@ -323,6 +336,7 @@ export const onEditSubcategoryForm = async (
     })
     .where(eq(subcategories.id, subcategoryId));
 
+  revalidateTag("subcategories");
   return {
     message: "Success",
   };

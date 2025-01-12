@@ -12,8 +12,9 @@ import {
 import { eq, inArray } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { UTApi } from "uploadthing/server";
+import { revalidateTag, unstable_cache } from "next/cache";
 
-export const getProductsWithImagesnTags = cache(async () => {
+export const getProductsWithImagesnTags = unstable_cache(async () => {
   // const user = await auth();
   // if (!user.userId) throw new Error("Unauthorized");
 
@@ -49,7 +50,13 @@ export const getProductsWithImagesnTags = cache(async () => {
     };
   });
   return productsWithImagesAndTags;
-});
+},
+  ["products"],
+  {
+    tags: ["products", "productImages", "productTags", "tags"],
+    revalidate: 60 * 60 * 24,
+  }
+);
 
 export type ProductWithImagesAndTags = Awaited<
   ReturnType<typeof getProductsWithImagesnTags>
@@ -80,10 +87,11 @@ export const deleteProduct = async (productId: number) => {
       .filter((imageId) => imageId),
   );
 
+  revalidateTag("products");
   redirect("/admin/products");
 };
 
-export const getProductCategories = cache(async () => {
+export const getProductCategories =  unstable_cache(async () => {
   // const user = await auth();
   // if (!user.userId) throw new Error("Unauthorized");
 
@@ -103,7 +111,13 @@ export const getProductCategories = cache(async () => {
       };
     }),
   };
-});
+},
+  ["categories", "subcategories"],
+  {
+    tags: ["categories", "subcategories"],
+    revalidate: 60 * 60 * 24,
+  }
+);
 
 export type Category = Awaited<
   ReturnType<typeof getProductCategories>
@@ -158,6 +172,7 @@ export const deleteSubcategory = async (subcategoryId: number) => {
   await db.delete(products).where(eq(products.subcategoryId, subcategoryId));
   await db.delete(subcategories).where(eq(subcategories.id, subcategoryId));
 
+  revalidateTag("subcategories");
   redirect("/admin/categories/sub");
 };
 
@@ -183,5 +198,6 @@ export const deleteTag = async (tagId: number) => {
   await db.delete(productTags).where(eq(productTags.tagId, tagId));
   await db.delete(tags).where(eq(tags.id, tagId));
 
+  revalidateTag("tags");
   redirect("/admin/tags");
 };

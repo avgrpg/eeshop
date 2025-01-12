@@ -8,9 +8,9 @@ export function TopNav() {
         <span className="truncate text-xl font-bold leading-none">EE Shop</span>
       </div>
 
-      <div className="flex items-center gap-6 text-sm font-semibold leading-none">
-        <Link href="#categories">Products</Link>
-        <Link href="#about">About us</Link>
+      <div className="flex items-center gap-3 text-sm font-semibold leading-none">
+        <Link href="/#categories" className="rounded-md bg-background p-2">Products</Link>
+        <Link href="/#about" className="rounded-md bg-background p-2">About</Link>
       </div>
 
       {/* <div className="flex items-center gap-2">

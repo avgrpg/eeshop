@@ -45,8 +45,6 @@ const CategoryItem = ({ category }: { category: Category }) => {
 export default async function CategoriesPage() {
   const { categories } = await getProductCategories();
 
-  console.log(categories);
-
   return (
     <div className="flex flex-1 flex-col gap-2 p-2">
       <div className="p-2 text-2xl">
