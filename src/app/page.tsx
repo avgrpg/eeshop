@@ -84,19 +84,19 @@ export default async function HomePage({
   const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
 
   return (
-    <main className="px-5">
+    <main className="px-3 md:px-5">
       {/* Hero section */}
-      <div className="flex items-center justify-between p-2">
-        <div className="flex max-w-xs flex-col gap-4 p-5">
-          <h1 className="text-4xl font-bold">
+      <div className="flex items-center justify-between md:p-2 flex-col md:flex-row gap-6">
+        <div className="flex max-w-xs flex-col gap-4 p-2 md:p-5">
+          <h1 className="text-xl md:text-4xl font-bold">
             Welcome to your new e-commerce store
           </h1>
-          <p className="text-sm font-medium text-muted-foreground">
+          <p className="text-xs md:text-sm font-medium text-muted-foreground">
             Explore our wide selection of products and discover the best deals
             available.
           </p>
           <div>
-            <Button className="rounded-full px-10 font-medium">
+            <Button className="rounded-full px-10 font-medium hidden md:flex">
               <Link href="#">Expore Now</Link>
             </Button>
           </div>
@@ -105,17 +105,17 @@ export default async function HomePage({
       </div>
 
       {/* Product Section */}
-      <section className="flex w-full flex-col items-center justify-center py-6">
+      <section className="flex w-full flex-col items-center justify-center py-6" id="products">
         <div className="flex flex-col gap-2 p-12 text-center">
-          <h2 className="text-2xl font-bold">Featured Products</h2>
-          <small className="text-sm font-medium text-muted-foreground">
+          <h2 className="text-lg md:text-2xl font-bold">Featured Products</h2>
+          <small className="text-xs md:text-sm font-medium text-muted-foreground">
             View all products. You can filter by subcategory. You can also sort
             by price.
           </small>
         </div>
 
         {/* Categories */}
-        <div id="categories" className="flex flex-wrap gap-6 pb-3">
+        <div id="categories" className="flex flex-wrap md:gap-6">
           <Link href="?urlcategory=0&urlsubcategory=0" scroll={false}>
             <Button variant="category" aria-selected={urlcategory === 0}>
               Everything
@@ -139,7 +139,7 @@ export default async function HomePage({
 
         {/* Subcategories */}
         {urlcategory !== 0 && subcategories.length > 0 && (
-          <div className="flex flex-wrap gap-6 p-3">
+          <div className="flex flex-wrap md:gap-6 p-3">
             <Link
               href={`?urlcategory=${urlcategory}&urlsubcategory=0`}
               scroll={false}
@@ -167,7 +167,7 @@ export default async function HomePage({
           </div>
         )}
 
-        <div className="grid flex-1 grid-cols-2 content-start gap-3 px-7 py-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="pt-3 grid flex-1 grid-cols-2 content-start gap-3 md:px-7 py-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {productsWithImagesAndTagsWithSubcategory
             .filter((product) => {
               if (urlcategory === 0) {

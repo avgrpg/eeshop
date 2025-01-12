@@ -9,7 +9,7 @@ export function TopNav() {
       </div>
 
       <div className="flex items-center gap-3 text-sm font-semibold leading-none">
-        <Link href="/#categories" className="rounded-md bg-background p-2">Products</Link>
+        <Link href="/#products" className="rounded-md bg-background p-2">Products</Link>
         <Link href="/#about" className="rounded-md bg-background p-2">About</Link>
       </div>
 

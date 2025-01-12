@@ -19,7 +19,7 @@ export function CarouselHero({
 }) {
   return (
     <Carousel
-      className={cn("w-full max-w-xs md:max-w-2xl", className)}
+      className={cn("w-full max-w-sm md:max-w-2xl", className)}
       opts={{
         loop: true,
       }}
@@ -39,9 +39,9 @@ export function CarouselHero({
                   sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
                 />
               )}
-              <div className="absolute bottom-5 left-5 flex flex-col bg-background px-5 py-3 gap-2 rounded-xl max-w-xs">
-                <h1 className="text-2xl font-bold tracking-tight">{category.name}</h1>
-                <p className="text-sm font-medium text-muted-foreground">
+              <div className="absolute bottom-5 left-5 flex flex-col bg-background px-3 py-2 md:px-5 md:py-3 gap-2 rounded-xl max-w-40 md:max-w-xs">
+                <h1 className="text-lg md:text-2xl font-bold tracking-tight leading-tight">{category.name}</h1>
+                <p className="text-xs md:text-sm font-medium text-muted-foreground line-clamp-5">
                   {category.description}
                 </p>
               </div>
