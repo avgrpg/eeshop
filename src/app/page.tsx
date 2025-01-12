@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 import { CarouselHero } from "~/components/carousel-hero";
 import { Button } from "~/components/ui/button";
 import { urlSchema } from "~/schema/url-schema";
@@ -9,10 +10,16 @@ import {
   type ProductWithImagesAndTags,
 } from "~/server/queries";
 
-const ProductCard = ({ product }: { product: ProductWithImagesAndTags }) => {
+const ProductCard = ({
+  product,
+  tag,
+}: {
+  product: ProductWithImagesAndTags;
+  tag?: React.ReactNode;
+}) => {
   return (
-    <div className="group relative h-56 overflow-hidden">
-      <div className="relative h-40 overflow-hidden rounded-lg bg-primary/20">
+    <div className="group relative h-64 overflow-hidden">
+      <div className="relative h-48 overflow-hidden rounded-lg bg-primary/20">
         {product.images[0]?.url && (
           <Image
             src={product.images[0].url}
@@ -24,6 +31,7 @@ const ProductCard = ({ product }: { product: ProductWithImagesAndTags }) => {
             sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
           />
         )}
+        {tag}
       </div>
       <div className="flex flex-row-reverse justify-between py-3 pl-2">
         <div className="flex flex-none items-center justify-center">
@@ -59,7 +67,6 @@ export default async function HomePage({
   const productsWithImagesAndTags = await getProductsWithImagesnTags();
 
   const { categories, subcategories } = await getProductCategories();
-  console.log(categories, subcategories, productsWithImagesAndTags);
 
   const productsWithImagesAndTagsWithSubcategory =
     productsWithImagesAndTags.map((product) => {
@@ -70,7 +77,6 @@ export default async function HomePage({
         ),
       };
     });
-  console.log(productsWithImagesAndTagsWithSubcategory);
 
   const urlParams = await searchParams;
   const parsedUrlcategory = urlSchema.safeParse(urlParams);
@@ -110,7 +116,7 @@ export default async function HomePage({
 
         {/* Categories */}
         <div id="categories" className="flex flex-wrap gap-6 pb-3">
-          <Link href="?urlcategory=0&urlsubcategory=0">
+          <Link href="?urlcategory=0&urlsubcategory=0" scroll={false}>
             <Button variant="category" aria-selected={urlcategory === 0}>
               Everything
             </Button>
@@ -134,7 +140,10 @@ export default async function HomePage({
         {/* Subcategories */}
         {urlcategory !== 0 && subcategories.length > 0 && (
           <div className="flex flex-wrap gap-6 p-3">
-            <Link href={`?urlcategory=${urlcategory}&urlsubcategory=0`}>
+            <Link
+              href={`?urlcategory=${urlcategory}&urlsubcategory=0`}
+              scroll={false}
+            >
               <Button variant="category" aria-selected={urlsubcategory === 0}>
                 Everything
               </Button>
@@ -158,7 +167,7 @@ export default async function HomePage({
           </div>
         )}
 
-        <div className="grid flex-1 grid-cols-2 content-start gap-3 p-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="grid flex-1 grid-cols-2 content-start gap-3 px-7 py-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {productsWithImagesAndTagsWithSubcategory
             .filter((product) => {
               if (urlcategory === 0) {
@@ -173,14 +182,33 @@ export default async function HomePage({
               );
             })
             .map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard
+                key={product.id}
+                product={product}
+                tag={
+                  urlsubcategory === 0 && (
+                    <Button
+                      variant="secondary"
+                      className="absolute left-3 top-3"
+                      size="sm"
+                    >
+                      <span className="max-w-20 truncate">
+                        {/* {product.subcategory?.name} */}
+                        {urlcategory === 0
+                          ? product.subcategory?.category?.name
+                          : product.subcategory?.name}
+                      </span>
+                    </Button>
+                  )
+                }
+              />
             ))}
         </div>
       </section>
 
       {/* About us section */}
-      <section className="flex w-full flex-col items-center justify-center">
-        <div className="flex flex-col gap-2 p-12 text-center">
+      <section className="flex w-full flex-col items-center justify-center pt-6" id="about">
+        <div className="flex flex-col gap-2 p-6 text-center">
           <h2 className="text-2xl font-bold">About Us</h2>
           <small className="text-sm font-medium text-muted-foreground">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur

@@ -9,8 +9,8 @@ export function TopNav() {
       </div>
 
       <div className="flex items-center gap-6 text-sm font-semibold leading-none">
-        <Link href="#">Products</Link>
-        <Link href="#">About us</Link>
+        <Link href="#categories">Products</Link>
+        <Link href="#about">About us</Link>
       </div>
 
       {/* <div className="flex items-center gap-2">
