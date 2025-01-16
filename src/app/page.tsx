@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { CarouselHero } from "~/components/carousel-hero";
+import { ResponseDialogDrawer } from "~/components/response-dialog-drawer";
 import { Button } from "~/components/ui/button";
 import { urlSchema } from "~/schema/url-schema";
 import {
@@ -18,7 +19,7 @@ const ProductCard = ({
   tag?: React.ReactNode;
 }) => {
   return (
-    <div className="group relative h-64 overflow-hidden">
+    <div className="group relative h-64 overflow-hidden cursor-pointer">
       <div className="relative h-48 overflow-hidden rounded-lg bg-primary/20">
         {product.images[0]?.url && (
           <Image
@@ -182,8 +183,11 @@ export default async function HomePage({
               );
             })
             .map((product) => (
-              <ProductCard
+              <ResponseDialogDrawer
                 key={product.id}
+                product={product}
+              >
+              <ProductCard
                 product={product}
                 tag={
                   urlsubcategory === 0 && (
@@ -202,6 +206,7 @@ export default async function HomePage({
                   )
                 }
               />
+              </ResponseDialogDrawer>
             ))}
         </div>
       </section>
