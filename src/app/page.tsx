@@ -4,6 +4,7 @@ import React from "react";
 import { CarouselHero } from "~/components/carousel-hero";
 import { ResponseDialogDrawer } from "~/components/response-dialog-drawer";
 import { Button } from "~/components/ui/button";
+import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 import { urlSchema } from "~/schema/url-schema";
 import {
   getProductCategories,
@@ -19,7 +20,7 @@ const ProductCard = ({
   tag?: React.ReactNode;
 }) => {
   return (
-    <div className="group relative h-64 overflow-hidden cursor-pointer">
+    <div className="group relative h-64 cursor-pointer overflow-hidden">
       <div className="relative h-48 overflow-hidden rounded-lg bg-primary/20">
         {product.images[0]?.url && (
           <Image
@@ -85,19 +86,19 @@ export default async function HomePage({
   const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
 
   return (
-    <main className="px-3 md:px-5">
+    <main className="bg-background px-3 md:px-5">
       {/* Hero section */}
-      <div className="flex items-center justify-between md:p-2 flex-col md:flex-row gap-6">
+      <div className="flex flex-col items-center justify-between gap-6 md:flex-row md:p-2">
         <div className="flex max-w-xs flex-col gap-4 p-2 md:p-5">
-          <h1 className="text-xl md:text-4xl font-bold">
+          <h1 className="text-xl font-bold md:text-4xl">
             Welcome to your new e-commerce store
           </h1>
-          <p className="text-xs md:text-sm font-medium text-muted-foreground">
+          <p className="text-xs font-medium text-muted-foreground md:text-sm">
             Explore our wide selection of products and discover the best deals
             available.
           </p>
           <div>
-            <Button className="rounded-full px-10 font-medium hidden md:flex">
+            <Button className="hidden rounded-full px-10 font-medium md:flex">
               <Link href="#">Expore Now</Link>
             </Button>
           </div>
@@ -106,69 +107,81 @@ export default async function HomePage({
       </div>
 
       {/* Product Section */}
-      <section className="flex w-full flex-col items-center justify-center py-6" id="products">
+      <section
+        className="flex w-full flex-col items-center justify-center py-6"
+        id="products"
+      >
         <div className="flex flex-col gap-2 p-12 text-center">
-          <h2 className="text-lg md:text-2xl font-bold">Featured Products</h2>
-          <small className="text-xs md:text-sm font-medium text-muted-foreground">
+          <h2 className="text-lg font-bold md:text-2xl">Featured Products</h2>
+          <small className="text-xs font-medium text-muted-foreground md:text-sm">
             View all products. You can filter by subcategory. You can also sort
             by price.
           </small>
         </div>
 
         {/* Categories */}
-        <div id="categories" className="flex flex-wrap md:gap-6">
-          <Link href="?urlcategory=0&urlsubcategory=0" scroll={false}>
-            <Button variant="category" aria-selected={urlcategory === 0}>
-              Everything
-            </Button>
-          </Link>
-          {categories.map((category) => (
-            <Link
-              href={`?urlcategory=${category.id}&urlsubcategory=0`}
-              scroll={false}
-              key={category.id}
-            >
-              <Button
-                variant="category"
-                aria-selected={category.id === urlcategory}
-              >
-                {category.name}
-              </Button>
-            </Link>
-          ))}
-        </div>
-
-        {/* Subcategories */}
-        {urlcategory !== 0 && subcategories.length > 0 && (
-          <div className="flex flex-wrap md:gap-6 p-3">
-            <Link
-              href={`?urlcategory=${urlcategory}&urlsubcategory=0`}
-              scroll={false}
-            >
-              <Button variant="category" aria-selected={urlsubcategory === 0}>
+        <ScrollArea className="grid w-full justify-center pb-2" type="always">
+          <div id="categories" className="flex md:gap-6">
+            <Link href="?urlcategory=0&urlsubcategory=0" scroll={false}>
+              <Button variant="category" aria-selected={urlcategory === 0}>
                 Everything
               </Button>
             </Link>
-            {subcategories
-              .filter((subcategory) => subcategory.categoryId === urlcategory)
-              .map((subcategory) => (
-                <Link
-                  href={`?urlcategory=${urlcategory}&urlsubcategory=${subcategory.id}`}
-                  scroll={false}
-                  key={subcategory.id}
+            {categories.map((category) => (
+              <Link
+                href={`?urlcategory=${category.id}&urlsubcategory=0`}
+                scroll={false}
+                key={category.id}
+              >
+                <Button
+                  variant="category"
+                  aria-selected={category.id === urlcategory}
                 >
-                  <Button
-                    variant="category"
-                    aria-selected={urlsubcategory === subcategory.id}
-                  >
-                    {subcategory.name}
-                  </Button>
-                </Link>
-              ))}
+                  {category.name}
+                </Button>
+              </Link>
+            ))}
           </div>
+          <ScrollBar orientation="horizontal" className="h-2" />
+        </ScrollArea>
+
+        {/* Subcategories */}
+        {urlcategory !== 0 && subcategories.length > 0 && (
+          <ScrollArea
+            className="my-2 grid w-full justify-center pb-2"
+            type="always"
+          >
+            <div className="flex md:gap-6">
+              <Link
+                href={`?urlcategory=${urlcategory}&urlsubcategory=0`}
+                scroll={false}
+              >
+                <Button variant="category" aria-selected={urlsubcategory === 0}>
+                  Everything
+                </Button>
+              </Link>
+              {subcategories
+                .filter((subcategory) => subcategory.categoryId === urlcategory)
+                .map((subcategory) => (
+                  <Link
+                    href={`?urlcategory=${urlcategory}&urlsubcategory=${subcategory.id}`}
+                    scroll={false}
+                    key={subcategory.id}
+                  >
+                    <Button
+                      variant="category"
+                      aria-selected={urlsubcategory === subcategory.id}
+                    >
+                      {subcategory.name}
+                    </Button>
+                  </Link>
+                ))}
+            </div>
+            <ScrollBar orientation="horizontal" className="h-2" />
+          </ScrollArea>
         )}
 
-        <div className="pt-3 grid flex-1 grid-cols-2 content-start gap-3 md:px-7 py-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="grid flex-1 grid-cols-2 content-start gap-3 py-2 pt-3 md:grid-cols-3 md:px-7 lg:grid-cols-4 xl:grid-cols-5">
           {productsWithImagesAndTagsWithSubcategory
             .filter((product) => {
               if (urlcategory === 0) {
@@ -183,36 +196,36 @@ export default async function HomePage({
               );
             })
             .map((product) => (
-              <ResponseDialogDrawer
-                key={product.id}
-                product={product}
-              >
-              <ProductCard
-                product={product}
-                tag={
-                  urlsubcategory === 0 && (
-                    <Button
-                      variant="secondary"
-                      className="absolute left-3 top-3"
-                      size="sm"
-                    >
-                      <span className="max-w-20 truncate">
-                        {/* {product.subcategory?.name} */}
-                        {urlcategory === 0
-                          ? product.subcategory?.category?.name
-                          : product.subcategory?.name}
-                      </span>
-                    </Button>
-                  )
-                }
-              />
+              <ResponseDialogDrawer key={product.id} product={product}>
+                <ProductCard
+                  product={product}
+                  tag={
+                    urlsubcategory === 0 && (
+                      <Button
+                        variant="secondary"
+                        className="absolute left-3 top-3"
+                        size="sm"
+                      >
+                        <span className="max-w-20 truncate">
+                          {/* {product.subcategory?.name} */}
+                          {urlcategory === 0
+                            ? product.subcategory?.category?.name
+                            : product.subcategory?.name}
+                        </span>
+                      </Button>
+                    )
+                  }
+                />
               </ResponseDialogDrawer>
             ))}
         </div>
       </section>
 
       {/* About us section */}
-      <section className="flex w-full flex-col items-center justify-center pt-6" id="about">
+      <section
+        className="flex w-full flex-col items-center justify-center pt-6"
+        id="about"
+      >
         <div className="flex flex-col gap-2 p-6 text-center">
           <h2 className="text-2xl font-bold">About Us</h2>
           <small className="text-sm font-medium text-muted-foreground">
