@@ -9,6 +9,7 @@ import { TopNav } from "~/components/top-nav";
 
 const rubik = Rubik({
   subsets: ["latin"],
+  display: "swap",
   variable: "--font-sans",
 });
 
