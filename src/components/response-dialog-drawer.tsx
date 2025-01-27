@@ -49,6 +49,8 @@ export function ResponseDialogDrawer({
           <div>{children}</div>
         </DrawerTrigger>
         <DrawerOverlay className="fixed inset-0 z-50 h-1/4 duration-300 fade-in-0">
+        <div className="fixed top-0 bg-black/70 backdrop-blur-sm h-full w-full">
+        </div>
           {product.images[0]?.url && (
             <Image
               src={product.images[0].url}
