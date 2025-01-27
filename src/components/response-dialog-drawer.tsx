@@ -49,8 +49,7 @@ export function ResponseDialogDrawer({
           <div>{children}</div>
         </DrawerTrigger>
         <DrawerOverlay className="fixed inset-0 z-50 h-1/4 duration-300 fade-in-0">
-        <div className="fixed top-0 bg-black/70 backdrop-blur-sm h-full w-full">
-        </div>
+          <div className="fixed top-0 h-full w-full bg-black/70 backdrop-blur-sm"></div>
           {product.images[0]?.url && (
             <Image
               src={product.images[0].url}
@@ -62,8 +61,10 @@ export function ResponseDialogDrawer({
               sizes="100vw"
             />
           )}
-          <div className="fixed top-0 flex h-1/5 max-w-[85%] items-end pl-10 py-3 text-background">
+          <div className="fixed top-0 flex h-1/5 max-w-[85%] items-end py-4 pl-12 text-background">
+          <div className="flex items-center min-h-20">
             <h2 className="text-2xl font-bold">{product.name}</h2>
+          </div>
           </div>
           <div className="fixed top-0 px-4 py-5 text-background">
             <DrawerClose asChild>
@@ -136,11 +137,9 @@ export function ResponseDialogDrawer({
           </ScrollArea>
           <DrawerFooter className="flex items-center pb-6">
             <div>
-              <DrawerClose asChild>
-                <Button variant="outline" className="w-auto">
-                  How to Buy
-                </Button>
-              </DrawerClose>
+              <Button variant="outline" className="w-auto">
+                How to Buy
+              </Button>
             </div>
           </DrawerFooter>
         </DrawerContent>
