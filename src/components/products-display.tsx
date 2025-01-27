@@ -6,6 +6,7 @@ import {
 import { ResponseDialogDrawer } from "./response-dialog-drawer";
 import Image from "next/image";
 import { Button } from "./ui/button";
+import { urlSchema } from "~/schema/url-schema";
 
 const ProductCard = ({
   product,
@@ -62,19 +63,27 @@ const ProductCard = ({
 // }
 
 export async function ProductsDisplay({
-  urlcategory,
-  urlsubcategory,
+  // urlcategory,
+  // urlsubcategory,
+  searchParams,
 }: {
-  urlcategory: number;
-  urlsubcategory: number;
+  // urlcategory: number;
+  // urlsubcategory: number;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const productsWithImagesAndTagsData = getProductsWithImagesnTags();
   const productsCategoriesData = getProductCategories();
 
-  const [productsWithImagesAndTags, { subcategories }] = await Promise.all([
+  const [productsWithImagesAndTags, { subcategories }, urlParams] = await Promise.all([
     productsWithImagesAndTagsData,
     productsCategoriesData,
+    searchParams,
   ]);
+
+  // const urlParams = await searchParams;
+  const parsedUrlcategory = urlSchema.safeParse(urlParams);
+  const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
+  const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
 
   const productsWithImagesAndTagsWithSubcategory =
     productsWithImagesAndTags.map((product) => {

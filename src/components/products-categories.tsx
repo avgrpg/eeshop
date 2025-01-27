@@ -4,14 +4,21 @@ import Link from "next/link";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { Button } from "./ui/button";
 import { getProductCategories } from "~/server/queries";
+import { urlSchema } from "~/schema/url-schema";
 
 export async function ProductsCategories({
-  urlcategory,
-  urlsubcategory,
+  // urlcategory,
+  // urlsubcategory,
+  searchParams,
 }: {
-  urlcategory: number;
-  urlsubcategory: number;
+  // urlcategory: number;
+  // urlsubcategory: number;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const urlParams = await searchParams;
+  const parsedUrlcategory = urlSchema.safeParse(urlParams);
+  const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
+  const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
   const { categories, subcategories } = await getProductCategories();
 
   return (
