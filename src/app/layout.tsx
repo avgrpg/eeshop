@@ -33,7 +33,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${inter.className} grid h-screen grid-rows-[auto,1fr]`}
+          className={`${rubik.className} grid h-screen grid-rows-[auto,1fr] antialiased`}
         >
           <TopNav />
           {children}
