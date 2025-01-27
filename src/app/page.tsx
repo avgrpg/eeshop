@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { CarouselHero } from "~/components/carousel-hero";
+import { ProductsDisplay } from "~/components/products-display";
 import { ResponseDialogDrawer } from "~/components/response-dialog-drawer";
 import { Button } from "~/components/ui/button";
 import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
@@ -181,7 +182,12 @@ export default async function HomePage({
           </ScrollArea>
         )}
 
-        <div className="grid flex-1 grid-cols-2 content-start gap-3 py-2 pt-3 md:grid-cols-3 md:px-7 lg:grid-cols-4 xl:grid-cols-5">
+        <ProductsDisplay
+          productsWithImagesAndTagsWithSubcategory={productsWithImagesAndTagsWithSubcategory}
+          urlcategory={urlcategory}
+          urlsubcategory={urlsubcategory}
+        />
+        {/* <div className="grid flex-1 grid-cols-2 content-start gap-3 py-2 pt-3 md:grid-cols-3 md:px-7 lg:grid-cols-4 xl:grid-cols-5">
           {productsWithImagesAndTagsWithSubcategory
             .filter((product) => {
               if (urlcategory === 0) {
@@ -207,7 +213,6 @@ export default async function HomePage({
                         size="sm"
                       >
                         <span className="max-w-20 truncate">
-                          {/* {product.subcategory?.name} */}
                           {urlcategory === 0
                             ? product.subcategory?.category?.name
                             : product.subcategory?.name}
@@ -218,7 +223,7 @@ export default async function HomePage({
                 />
               </ResponseDialogDrawer>
             ))}
-        </div>
+        </div> */}
       </section>
 
       {/* About us section */}

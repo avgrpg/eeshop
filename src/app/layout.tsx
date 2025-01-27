@@ -2,19 +2,12 @@ import "@uploadthing/react/styles.css";
 import "~/styles/globals.css";
 
 import { Rubik } from "next/font/google";
-import { Inter } from "next/font/google";
 import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 import { TopNav } from "~/components/top-nav";
 
 const rubik = Rubik({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-sans",
-});
-
-const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-sans",
