@@ -2,12 +2,19 @@ import "@uploadthing/react/styles.css";
 import "~/styles/globals.css";
 
 import { Rubik } from "next/font/google";
+import { Inter } from "next/font/google";
 import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 import { TopNav } from "~/components/top-nav";
 
 const rubik = Rubik({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
+});
+
+const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-sans",
@@ -26,7 +33,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`font-sans ${rubik.variable} grid h-screen grid-rows-[auto,1fr] antialiased`}
+          className={`${inter.className} grid h-screen grid-rows-[auto,1fr]`}
         >
           <TopNav />
           {children}
