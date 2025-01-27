@@ -62,7 +62,7 @@ export function ResponseDialogDrawer({
               sizes="100vw"
             />
           )}
-          <div className="fixed top-0 flex h-1/5 max-w-[85%] items-end px-6 py-3 text-background">
+          <div className="fixed top-0 flex h-1/5 max-w-[85%] items-end pl-10 py-3 text-background">
             <h2 className="text-2xl font-bold">{product.name}</h2>
           </div>
           <div className="fixed top-0 px-4 py-5 text-background">
@@ -74,7 +74,7 @@ export function ResponseDialogDrawer({
             </DrawerClose>
           </div>
         </DrawerOverlay>
-        <DrawerContent className="h-4/5 rounded-2xl">
+        <DrawerContent className="h-4/5 rounded-t-2xl">
           <ScrollArea className="h-full px-5">
             <div className="p-2">
               <strong className="text-xl font-bold leading-none tracking-tight">
