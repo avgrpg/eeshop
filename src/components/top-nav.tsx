@@ -9,8 +9,8 @@ export function TopNav() {
       </div>
 
       <div className="flex items-center gap-3 text-sm font-semibold leading-none">
-        <Link href="/#products" className="rounded-md bg-background p-2">Products</Link>
-        <Link href="/#about" className="rounded-md bg-background p-2">About</Link>
+        <Link href="/#products" className="rounded-md bg-background p-2" prefetch={false}>Products</Link>
+        <Link href="/#about" className="rounded-md bg-background p-2" prefetch={false}>About Us</Link>
       </div>
 
       {/* <div className="flex items-center gap-2">

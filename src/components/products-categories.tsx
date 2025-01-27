@@ -25,7 +25,11 @@ export async function ProductsCategories({
       {/* Categories */}
       <ScrollArea className="grid w-full justify-center pb-2" type="always">
         <div id="categories" className="flex md:gap-6">
-          <Link href="?urlcategory=0&urlsubcategory=0" scroll={false}>
+          <Link
+            href="?urlcategory=0&urlsubcategory=0"
+            scroll={false}
+            prefetch={false}
+          >
             <Button variant="category" aria-selected={urlcategory === 0}>
               Everything
             </Button>
@@ -35,6 +39,7 @@ export async function ProductsCategories({
               href={`?urlcategory=${category.id}&urlsubcategory=0`}
               scroll={false}
               key={category.id}
+              prefetch={false}
             >
               <Button
                 variant="category"
@@ -58,6 +63,7 @@ export async function ProductsCategories({
             <Link
               href={`?urlcategory=${urlcategory}&urlsubcategory=0`}
               scroll={false}
+              prefetch={false}
             >
               <Button variant="category" aria-selected={urlsubcategory === 0}>
                 Everything
@@ -70,6 +76,7 @@ export async function ProductsCategories({
                   href={`?urlcategory=${urlcategory}&urlsubcategory=${subcategory.id}`}
                   scroll={false}
                   key={subcategory.id}
+                  prefetch={false}
                 >
                   <Button
                     variant="category"

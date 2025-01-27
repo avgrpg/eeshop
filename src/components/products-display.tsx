@@ -6,7 +6,6 @@ import {
 import { ResponseDialogDrawer } from "./response-dialog-drawer";
 import Image from "next/image";
 import { Button } from "./ui/button";
-import { urlSchema } from "~/schema/url-schema";
 
 const ProductCard = ({
   product,
