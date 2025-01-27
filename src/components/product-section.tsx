@@ -27,9 +27,9 @@ export async function ProductSection({
       </div>
 
       <ProductsCategories
-        searchParams={searchParams}
-        // urlcategory={urlcategory}
-        // urlsubcategory={urlsubcategory}
+        // searchParams={searchParams}
+        urlcategory={urlcategory}
+        urlsubcategory={urlsubcategory}
       />
 
       <Suspense fallback={<div>Loading...</div>}

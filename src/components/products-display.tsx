@@ -62,6 +62,8 @@ const ProductCard = ({
 //   subcategory: Subcategory | undefined;
 // }
 
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export async function ProductsDisplay({
   urlcategory,
   urlsubcategory,
@@ -79,6 +81,7 @@ export async function ProductsDisplay({
       productsWithImagesAndTagsData,
       productsCategoriesData,
       // searchParams,
+      delay(1000),
     ]);
 
   // const urlParams = await searchParams;
