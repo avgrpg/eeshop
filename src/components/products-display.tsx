@@ -1,13 +1,11 @@
-"use client";
-
 import {
-  type Subcategory,
   type ProductWithImagesAndTags,
+  getProductsWithImagesnTags,
+  getProductCategories,
 } from "~/server/queries";
 import { ResponseDialogDrawer } from "./response-dialog-drawer";
 import Image from "next/image";
 import { Button } from "./ui/button";
-import { useMemo } from "react";
 
 const ProductCard = ({
   product,
@@ -58,35 +56,49 @@ const ProductCard = ({
   );
 };
 
-interface productsWithImagesAndTagsWithSubcategory
-  extends ProductWithImagesAndTags {
-  subcategory: Subcategory | undefined;
-}
+// interface productsWithImagesAndTagsWithSubcategory
+//   extends ProductWithImagesAndTags {
+//   subcategory: Subcategory | undefined;
+// }
 
-export function ProductsDisplay({
-  productsWithImagesAndTagsWithSubcategory,
+export async function ProductsDisplay({
   urlcategory,
   urlsubcategory,
 }: {
-  productsWithImagesAndTagsWithSubcategory: productsWithImagesAndTagsWithSubcategory[];
   urlcategory: number;
   urlsubcategory: number;
 }) {
-  const filteredProducts = useMemo(
-    () =>
-      productsWithImagesAndTagsWithSubcategory.filter((product) => {
-        if (urlcategory === 0) {
-          return true;
-        }
-        if (urlsubcategory === 0) {
-          return product.subcategory?.categoryId === urlcategory;
-        }
-        return (
-          product.subcategory?.categoryId === urlcategory &&
-          product.subcategory?.id === urlsubcategory
-        );
-      }),
-    [productsWithImagesAndTagsWithSubcategory, urlcategory, urlsubcategory],
+  const productsWithImagesAndTagsData = getProductsWithImagesnTags();
+  const productsCategoriesData = getProductCategories();
+
+  const [productsWithImagesAndTags, { subcategories }] = await Promise.all([
+    productsWithImagesAndTagsData,
+    productsCategoriesData,
+  ]);
+
+  const productsWithImagesAndTagsWithSubcategory =
+    productsWithImagesAndTags.map((product) => {
+      return {
+        ...product,
+        subcategory: subcategories.find(
+          (subcategory) => subcategory.id === product.subcategoryId,
+        ),
+      };
+    });
+
+  const filteredProducts = productsWithImagesAndTagsWithSubcategory.filter(
+    (product) => {
+      if (urlcategory === 0) {
+        return true;
+      }
+      if (urlsubcategory === 0) {
+        return product.subcategory?.categoryId === urlcategory;
+      }
+      return (
+        product.subcategory?.categoryId === urlcategory &&
+        product.subcategory?.id === urlsubcategory
+      );
+    },
   );
 
   return (

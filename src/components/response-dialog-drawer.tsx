@@ -40,7 +40,7 @@ export function ResponseDialogDrawer({
 }) {
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
-  console.log(product.subcategory)
+  // console.log(product.subcategory)
   if (isMobile) {
     return (
       <Drawer open={open} onOpenChange={setOpen}>
