@@ -63,27 +63,28 @@ const ProductCard = ({
 // }
 
 export async function ProductsDisplay({
-  // urlcategory,
-  // urlsubcategory,
-  searchParams,
+  urlcategory,
+  urlsubcategory,
+  // searchParams,
 }: {
-  // urlcategory: number;
-  // urlsubcategory: number;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
+  urlcategory: number;
+  urlsubcategory: number;
+  // searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const productsWithImagesAndTagsData = getProductsWithImagesnTags();
   const productsCategoriesData = getProductCategories();
 
-  const [productsWithImagesAndTags, { subcategories }, urlParams] = await Promise.all([
-    productsWithImagesAndTagsData,
-    productsCategoriesData,
-    searchParams,
-  ]);
+  const [productsWithImagesAndTags, { subcategories }] =
+    await Promise.all([
+      productsWithImagesAndTagsData,
+      productsCategoriesData,
+      // searchParams,
+    ]);
 
   // const urlParams = await searchParams;
-  const parsedUrlcategory = urlSchema.safeParse(urlParams);
-  const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
-  const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
+  // const parsedUrlcategory = urlSchema.safeParse(urlParams);
+  // const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
+  // const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
 
   const productsWithImagesAndTagsWithSubcategory =
     productsWithImagesAndTags.map((product) => {

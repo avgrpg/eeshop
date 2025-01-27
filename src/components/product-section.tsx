@@ -1,13 +1,18 @@
 import { ProductsDisplay } from "./products-display";
 import { ProductsCategories } from "./products-categories";
-import { urlSchema } from "~/schema/url-schema";
 import { Suspense } from "react";
+import { urlSchema } from "~/schema/url-schema";
 
 export async function ProductSection({
   searchParams,
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const urlParams = await searchParams
+  const parsedUrlcategory = urlSchema.safeParse(urlParams);
+  const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
+  const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
+
   return (
     <section
       className="flex w-full flex-col items-center justify-center py-6"
@@ -27,11 +32,13 @@ export async function ProductSection({
         // urlsubcategory={urlsubcategory}
       />
 
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div>Loading...</div>}
+        key={`${urlcategory}-${urlsubcategory}`}
+      >
         <ProductsDisplay
-          searchParams={searchParams}
-          // urlcategory={urlcategory}
-          // urlsubcategory={urlsubcategory}
+          // searchParams={searchParams}
+          urlcategory={urlcategory}
+          urlsubcategory={urlsubcategory}
         />
       </Suspense>
     </section>
