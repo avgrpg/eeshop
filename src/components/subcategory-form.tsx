@@ -152,6 +152,9 @@ const SubcategoryForm = ({
 
   const onSubmit = async (data: z.infer<typeof subcategoryFormSchema>) => {
     console.log(data);
+    toast.loading("Saving subcategory...", {
+      id: "subcategory-form-submit",
+    });
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("description", data.description);
@@ -162,6 +165,7 @@ const SubcategoryForm = ({
         ? await onEditSubcategoryForm(subcategory.id, formData)
         : await onSubmitSubcategoryForm(formData);
 
+    toast.dismiss("subcategory-form-submit");
     if (result.message === "Success") {
       router.refresh();
       handleClose();

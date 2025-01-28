@@ -40,7 +40,7 @@ export function CarouselHero({
                   sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
                 />
               )}
-              <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent to-black/50 blur-3xl"></div>
+              <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b to-transparent from-black/50 blur-3xl"></div>
               <div className="absolute left-5 top-5 flex max-w-40 flex-col gap-2 rounded-xl px-3 py-2 text-white md:max-w-xs md:px-5 md:py-3">
                 <h1 className="text-lg font-bold leading-tight tracking-tight md:text-2xl">
                   {category.name}

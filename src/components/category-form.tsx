@@ -54,12 +54,16 @@ const CategoryForm = ({
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("description", data.description);
+    toast.loading("Saving category...", {
+      id: "category-form-submit",
+    });
 
     const result =
       mode === "edit"
         ? await onEditCategoryForm(category.id, formData)
         : await onSubmitCategoryForm(formData);
 
+    toast.dismiss("category-form-submit");
     if (result.message === "Success") {
       router.refresh();
       handleClose();
@@ -143,6 +147,7 @@ const defaultCategory = {
   id: 0,
   name: "",
   description: "",
+  imageUrl: null,
 };
 export const CategoryAddButton = () => {
   const [open, setOpen] = useState(false);
