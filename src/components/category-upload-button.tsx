@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { revalidateServerAction } from "~/server/form-action";
 import { UploadButton } from "~/utils/uploadthing";
 
 export const CategoryUploadButton = ({
@@ -19,8 +20,9 @@ export const CategoryUploadButton = ({
           id: "upload-image",
         });
       }}
-      onClientUploadComplete={(res) => {
+      onClientUploadComplete={async(res) => {
         console.log(res);
+        await revalidateServerAction("categories");
         toast.dismiss("upload-image");
         toast.success("Successfully uploaded!");
         router.refresh();
