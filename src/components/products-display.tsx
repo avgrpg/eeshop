@@ -80,7 +80,7 @@ export async function ProductsDisplay({
       productsWithImagesAndTagsData,
       productsCategoriesData,
       // searchParams,
-      // delay(1000),
+      delay(300),
     ]);
 
   // const urlParams = await searchParams;
