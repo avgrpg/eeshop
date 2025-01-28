@@ -9,6 +9,7 @@ import { cn } from "~/lib/utils";
 import { type Category } from "~/server/queries";
 import Image from "next/image";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 export function CarouselHero({
   className,
@@ -29,7 +30,7 @@ export function CarouselHero({
       <CarouselContent>
         {categories.map((category) => (
           <CarouselItem key={category.id}>
-            <section className="relative aspect-video w-full overflow-hidden rounded-3xl cursor-pointer">
+            <section className="relative aspect-video w-full cursor-pointer overflow-hidden rounded-3xl">
               {category.imageUrl && (
                 <Image
                   src={category.imageUrl}
@@ -39,16 +40,22 @@ export function CarouselHero({
                   sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
                 />
               )}
-              <div className="absolute bottom-5 left-5 flex flex-col bg-background px-3 py-2 md:px-5 md:py-3 gap-2 rounded-xl max-w-40 md:max-w-xs">
-                <h1 className="text-lg md:text-2xl font-bold tracking-tight leading-tight">{category.name}</h1>
-                <p className="text-xs md:text-sm font-medium text-muted-foreground line-clamp-5">
+              <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent to-black/50 blur-3xl"></div>
+              <div className="absolute left-5 top-5 flex max-w-40 flex-col gap-2 rounded-xl px-3 py-2 text-white md:max-w-xs md:px-5 md:py-3">
+                <h1 className="text-lg font-bold leading-tight tracking-tight md:text-2xl">
+                  {category.name}
+                </h1>
+                <p className="line-clamp-5 text-xs font-medium md:text-sm">
                   {category.description}
                 </p>
               </div>
               <div className="absolute bottom-5 right-5">
-                <Button>
-                  View More
-                </Button>
+                <Link
+                  href={`?urlcategory=${category.id}&urlsubcategory=0#products`}
+                  prefetch={false}
+                >
+                  <Button>View More</Button>
+                </Link>
               </div>
             </section>
           </CarouselItem>

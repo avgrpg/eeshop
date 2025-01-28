@@ -17,7 +17,7 @@ export async function ProductHero() {
         </p>
         <div>
           <Button className="hidden rounded-full px-10 font-medium md:flex">
-            <Link href="#" prefetch={false}>
+            <Link href="#products" prefetch={false}>
               Expore Now
             </Link>
           </Button>
