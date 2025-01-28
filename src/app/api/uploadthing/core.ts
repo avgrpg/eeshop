@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import { revalidateTag } from "next/cache";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
-import { UploadThingError } from "uploadthing/server";
+import { UploadThingError, UTApi } from "uploadthing/server";
 import { z } from "zod";
 import { db } from "~/server/db";
 import { categories, productImages } from "~/server/db/schema";
@@ -86,6 +86,17 @@ export const ourFileRouter = {
       const categoryId = z.coerce.number().safeParse(metadata.categoryId);
       if (!categoryId.success)
         throw new UploadThingError("Category ID is required") as Error;
+
+      const affectedCategory = await db
+        .query.categories.findFirst({
+          where: eq(categories.id, categoryId.data),
+        })
+      if (affectedCategory?.imageUrl) {
+        const utapi = new UTApi();
+        const imageId = affectedCategory.imageUrl.split("/").pop();
+        if (!imageId) throw new Error("Error deleting image");
+        await utapi.deleteFiles([imageId]);
+      }
 
       await db
         .update(categories)
