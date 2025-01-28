@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
+export const revalidate = 0;
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
