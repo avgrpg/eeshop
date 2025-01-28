@@ -104,11 +104,15 @@ const ProductDisplay = ({
 export function ResponseDialogDrawer({
   children,
   product,
+  open,
+  setOpen,
 }: {
   children: React.ReactNode;
   product: productsWithImagesAndTagsWithSubcategory;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
   // console.log(product);
   if (isMobile) {
