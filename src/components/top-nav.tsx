@@ -3,10 +3,10 @@ import Link from "next/link";
 export function TopNav() {
   return (
     <nav className="sticky top-0 z-50 flex h-16 w-full shrink-0 items-center justify-between border-b border-border px-6 backdrop-blur-md">
-      <div className="flex items-center gap-3">
+      <Link className="flex items-center gap-3" href="/">
         <img src="/favicon.ico" alt="EE Shop Logo" className="h-8 w-8" />
         <span className="truncate text-xl font-bold leading-none rounded-md bg-background/50 p-2">EE Shop</span>
-      </div>
+      </Link>
 
       <div className="flex items-center gap-3 text-sm font-semibold leading-none">
         <Link href="/#products" className="rounded-md bg-background/50 p-2" prefetch={false}>Products</Link>

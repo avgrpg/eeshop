@@ -36,7 +36,7 @@ export const onSubmitProductForm = async (
   const user = await auth();
   if (!user.userId) throw new Error("Unauthorized");
 
-  let data = Object.fromEntries(formData);
+  const data = Object.fromEntries(formData);
   console.log(data);
   if (data.tagIds) {
     data.tagIds = JSON.parse(data.tagIds);
