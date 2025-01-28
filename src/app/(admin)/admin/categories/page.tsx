@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { CategoryDeleteButton } from "~/components/category-delete-button";
 import {
   CategoryAddButton,
   CategoryEditButton,
@@ -8,7 +9,7 @@ import { type Category, getProductCategories } from "~/server/queries";
 
 const CategoryItem = ({ category }: { category: Category }) => {
   return (
-    <li className="flex flex-row gap-2 p-2 items-center">
+    <li className="flex flex-row items-center gap-2 p-2">
       {category.imageUrl ? (
         <Image
           src={category.imageUrl}
@@ -17,14 +18,14 @@ const CategoryItem = ({ category }: { category: Category }) => {
           height={96}
           className="rounded-lg"
         />
-      ): (
-        <div className="w-24 h-24 rounded-lg bg-secondary flex items-center justify-center">
+      ) : (
+        <div className="flex h-24 w-24 items-center justify-center rounded-lg bg-secondary">
           <span className="text-sm font-medium text-muted-foreground">
             No Image
           </span>
         </div>
       )}
-      <div className="flex flex-col gap-1 justify-center">
+      <div className="flex flex-col justify-center gap-1">
         <span className="inline-flex items-center rounded-lg bg-secondary px-2 py-px text-sm font-medium text-secondary-foreground">
           {category.name}
         </span>
@@ -35,8 +36,9 @@ const CategoryItem = ({ category }: { category: Category }) => {
       </div>
 
       <CategoryEditButton category={category} />
-      <div className="grow flex justify-end">
-      <CategoryUploadButton categoryId={category.id} />
+      <CategoryDeleteButton categoryId={category.id} />
+      <div className="flex grow justify-end">
+        <CategoryUploadButton categoryId={category.id} />
       </div>
     </li>
   );

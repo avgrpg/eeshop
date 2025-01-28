@@ -341,3 +341,27 @@ export const onEditSubcategoryForm = async (
     message: "Success",
   };
 };
+
+export const deleteCategory = async (categoryId: number) => {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorized");
+
+  console.log("deleteCategory");
+  try {
+    await db
+      .delete(categories)
+      .where(eq(categories.id, categoryId));
+  } catch (_err) {
+    return {
+      message: "Error",
+      ok: false,
+    }
+  }
+
+  revalidateTag("categories");
+  return {
+    message: "Success",
+    ok: true,
+  };
+};
+

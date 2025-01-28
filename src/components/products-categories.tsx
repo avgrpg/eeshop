@@ -24,7 +24,7 @@ export async function ProductsCategories({
     <>
       {/* Categories */}
       <ScrollArea className="grid w-full justify-center pb-2" type="always">
-        <div id="categories" className="flex md:gap-6">
+        <div id="categories" className="flex md:gap-6 gap-1">
           <Link
             href="?urlcategory=0&urlsubcategory=0"
             scroll={false}
@@ -59,7 +59,7 @@ export async function ProductsCategories({
           className="my-2 grid w-full justify-center pb-2"
           type="always"
         >
-          <div className="flex md:gap-6">
+          <div className="flex md:gap-6 gap-1">
             <Link
               href={`?urlcategory=${urlcategory}&urlsubcategory=0`}
               scroll={false}

@@ -14,48 +14,49 @@ import { redirect } from "next/navigation";
 import { UTApi } from "uploadthing/server";
 import { revalidateTag, unstable_cache } from "next/cache";
 
-export const getProductsWithImagesnTags = unstable_cache(async () => {
-  // const user = await auth();
-  // if (!user.userId) throw new Error("Unauthorized");
+export const getProductsWithImagesnTags = unstable_cache(
+  async () => {
+    // const user = await auth();
+    // if (!user.userId) throw new Error("Unauthorized");
 
-  //   const products = await db.query.products.findMany();
-  //   const productsWithImages = await db.query.productImages.findMany();
-  //   const productsWithTags = await db.query.productTags.findMany();
-  //   const tags = await db.query.tags.findMany();
+    //   const products = await db.query.products.findMany();
+    //   const productsWithImages = await db.query.productImages.findMany();
+    //   const productsWithTags = await db.query.productTags.findMany();
+    //   const tags = await db.query.tags.findMany();
 
-  const productsData = db.query.products.findMany();
-  const productImagesData = db.query.productImages.findMany();
-  const productTagsData = db.query.productTags.findMany();
-  const tagsData = db.query.tags.findMany();
+    const productsData = db.query.products.findMany();
+    const productImagesData = db.query.productImages.findMany();
+    const productTagsData = db.query.productTags.findMany();
+    const tagsData = db.query.tags.findMany();
 
-  const [products, productsWithImages, productsWithTags, tags] =
-    await Promise.all([
-      productsData,
-      productImagesData,
-      productTagsData,
-      tagsData,
-    ]);
+    const [products, productsWithImages, productsWithTags, tags] =
+      await Promise.all([
+        productsData,
+        productImagesData,
+        productTagsData,
+        tagsData,
+      ]);
 
-  console.log("get ProductsWithImagesnTags");
+    console.log("get ProductsWithImagesnTags");
 
-  const productsWithImagesAndTags = products.map((product) => {
-    return {
-      ...product,
-      images: productsWithImages.filter(
-        (image) => image.productId === product.id,
-      ),
-      tags: productsWithTags
-        .filter((tag) => tag.productId === product.id)
-        .map((tag) => tags.find((t) => t.id === tag.tagId)),
-    };
-  });
-  return productsWithImagesAndTags;
-},
+    const productsWithImagesAndTags = products.map((product) => {
+      return {
+        ...product,
+        images: productsWithImages.filter(
+          (image) => image.productId === product.id,
+        ),
+        tags: productsWithTags
+          .filter((tag) => tag.productId === product.id)
+          .map((tag) => tags.find((t) => t.id === tag.tagId)),
+      };
+    });
+    return productsWithImagesAndTags;
+  },
   ["products"],
   {
     tags: ["products", "productImages", "productTags", "tags"],
     revalidate: 60 * 60 * 24,
-  }
+  },
 );
 
 export type ProductWithImagesAndTags = Awaited<
@@ -91,32 +92,33 @@ export const deleteProduct = async (productId: number) => {
   redirect("/admin/products");
 };
 
-export const getProductCategories =  unstable_cache(async () => {
-  // const user = await auth();
-  // if (!user.userId) throw new Error("Unauthorized");
+export const getProductCategories = unstable_cache(
+  async () => {
+    // const user = await auth();
+    // if (!user.userId) throw new Error("Unauthorized");
 
-  console.log("getProductCategories");
+    console.log("getProductCategories");
 
-  const categories = await db.query.categories.findMany();
-  const subcategories = await db.query.subcategories.findMany();
+    const categories = await db.query.categories.findMany();
+    const subcategories = await db.query.subcategories.findMany();
 
-  return {
-    categories,
-    subcategories: subcategories.map((subcategory) => {
-      return {
-        ...subcategory,
-        category: categories.find(
-          (category) => category.id === subcategory.categoryId,
-        ),
-      };
-    }),
-  };
-},
+    return {
+      categories,
+      subcategories: subcategories.map((subcategory) => {
+        return {
+          ...subcategory,
+          category: categories.find(
+            (category) => category.id === subcategory.categoryId,
+          ),
+        };
+      }),
+    };
+  },
   ["categories", "subcategories"],
   {
     tags: ["categories", "subcategories"],
     revalidate: 60 * 60 * 24,
-  }
+  },
 );
 
 export type Category = Awaited<
