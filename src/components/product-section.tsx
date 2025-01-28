@@ -5,11 +5,11 @@ import { urlSchema } from "~/schema/url-schema";
 import { Skeleton } from "./ui/skeleton";
 
 const ProductLoading = () => (
-  <div className="grid flex-1 grid-cols-2 content-start gap-3 py-2 pt-3 md:grid-cols-3 md:px-7 lg:grid-cols-4 xl:grid-cols-5">
+  <div className="w-full grid flex-1 grid-cols-2 gap-3 py-2 pt-3 md:grid-cols-3 md:px-7 lg:grid-cols-4 xl:grid-cols-5">
     {Array.from({ length: 6 }).map((_, i) => (
       <Skeleton
         key={i}
-        className="flex h-64 min-w-48 items-center justify-center rounded-lg"
+        className="flex h-56 items-center justify-center rounded-lg"
       >
         <svg
           className={`h-16 w-16 animate-spin text-foreground`}
