@@ -53,6 +53,12 @@ export function CarouselHero({
                 <Link
                   href={`?urlcategory=${category.id}&urlsubcategory=0#products`}
                   prefetch={false}
+                  onClick={() => {
+                    window.document.getElementById(`category-${category.id}`)?.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                  }}
                 >
                   <Button>View More</Button>
                 </Link>

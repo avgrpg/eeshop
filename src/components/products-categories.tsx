@@ -40,6 +40,7 @@ export async function ProductsCategories({
               scroll={false}
               key={category.id}
               prefetch={false}
+              id={`category-${category.id}`}
             >
               <Button
                 variant="category"
@@ -77,6 +78,7 @@ export async function ProductsCategories({
                   scroll={false}
                   key={subcategory.id}
                   prefetch={false}
+                  id={`subcategory-${subcategory.id}`}
                 >
                   <Button
                     variant="category"
