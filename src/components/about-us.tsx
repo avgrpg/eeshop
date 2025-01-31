@@ -20,7 +20,7 @@ const contactItems = [
     label: "Call us directly",
     content: (
       <a
-        href="tel:+11234567890"
+        href="tel:+85297983303"
         className="text-xl font-medium text-foreground transition hover:text-primary"
       >
         +1 (123) 456-7890

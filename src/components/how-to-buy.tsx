@@ -3,13 +3,11 @@ import { Button } from "./ui/button";
 import {
   Drawer,
   DrawerContent,
-  DrawerFooter,
   DrawerTrigger,
 } from "./ui/drawer";
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogTrigger,
 } from "./ui/dialog";
 import { AboutUsSection } from "./about-us";
