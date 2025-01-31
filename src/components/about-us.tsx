@@ -20,10 +20,10 @@ const contactItems = [
     label: "Call us directly",
     content: (
       <a
-        href="tel:+85297983303"
+        href="tel:+85292732754"
         className="text-xl font-medium text-foreground transition hover:text-primary"
       >
-        +1 (123) 456-7890
+        +852 9273 2754
       </a>
     ),
   },
