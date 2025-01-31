@@ -6,9 +6,9 @@ import { getProductCategories } from "~/server/queries";
 export async function ProductHero() {
   const { categories } = await getProductCategories();
   return (
-    <div className="flex flex-col items-center justify-between gap-6 md:flex-row md:p-2 lg:p-5 xl:p-10">
+    <div className="flex flex-col items-center justify-between gap-6 md:gap-10 lg:gap-12 md:flex-row md:p-2 lg:p-10 xl:p-16">
       <div className="flex max-w-xs flex-col gap-4 p-2 md:p-5">
-        <h1 className="text-xl font-bold md:text-4xl">
+        <h1 className="text-3xl font-bold md:text-5xl">
           Welcome to your new e-commerce store
         </h1>
         <p className="text-xs font-medium text-muted-foreground md:text-sm">

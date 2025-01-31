@@ -1,11 +1,7 @@
 import {
-  type ProductWithImagesAndTags,
   getProductsWithImagesnTags,
   getProductCategories,
 } from "~/server/queries";
-import { ResponseDialogDrawer } from "./response-dialog-drawer";
-import Image from "next/image";
-import { Button } from "./ui/button";
 import { ProductDisplayCards } from "./product-display-cards";
 
 // interface productsWithImagesAndTagsWithSubcategory

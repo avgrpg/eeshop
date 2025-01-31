@@ -1,3 +1,4 @@
+import { AboutUs } from "~/components/about-us";
 import { ProductHero } from "~/components/product-hero";
 import { ProductSection } from "~/components/product-section";
 
@@ -51,18 +52,10 @@ export default async function HomePage({
 
       {/* About us section */}
       <section
-        className="flex w-full flex-col items-center justify-center pt-6"
+        className="flex w-full flex-col items-center justify-center py-6"
         id="about"
       >
-        <div className="flex flex-col gap-2 p-6 text-center">
-          <h2 className="text-2xl font-bold">About Us</h2>
-          <small className="text-sm font-medium text-muted-foreground">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
-            adipisci, asperiores, delectus, doloremque, fugiat, labore, neque
-            odit, quisquam, quos, repellat, temporibus, veniam, voluptate
-            voluptas.
-          </small>
-        </div>
+        <AboutUs />
       </section>
     </main>
   );
