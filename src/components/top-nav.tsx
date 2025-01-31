@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ModeToggle } from "./mode-toggle";
 
 export function TopNav() {
   return (
@@ -8,9 +9,10 @@ export function TopNav() {
         <span className="truncate text-xl font-bold leading-none rounded-md bg-background/50 p-2">EE Shop</span>
       </Link>
 
-      <div className="flex items-center gap-3 text-sm font-semibold leading-none">
+      <div className="flex items-center gap-3 text-sm font-semibold leading-none whitespace-nowrap tracking-tight">
         <Link href="/#products" className="rounded-md bg-background/50 p-2" prefetch={false}>Products</Link>
         <Link href="/#about" className="rounded-md bg-background/50 p-2" prefetch={false}>About Us</Link>
+        <ModeToggle />
       </div>
 
       {/* <div className="flex items-center gap-2">
