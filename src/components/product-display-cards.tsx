@@ -23,8 +23,9 @@ const ProductCard = ({
   onClick?: () => void;
 }) => {
   return (
-    <div className="group relative h-64 cursor-pointer overflow-hidden"
-        onClick={onClick}
+    <div
+      className="group relative h-64 cursor-pointer overflow-hidden"
+      onClick={onClick}
     >
       <div className="relative h-48 overflow-hidden rounded-lg bg-primary/20">
         {product.images[0]?.url && (
@@ -75,20 +76,22 @@ export function ProductDisplayCards({
   urlcategory: number;
   urlsubcategory: number;
 }) {
-  const [currentProduct, setCurrentProduct] =
-    useState<productsWithImagesAndTagsWithSubcategory | null>(null);
+  const [currentProduct, setCurrentProduct] = useState<
+    productsWithImagesAndTagsWithSubcategory | false
+  >(false);
 
   return (
-    <div className="grid flex-1 grid-cols-2 content-start gap-3 py-2 pt-3 md:grid-cols-3 md:px-7 lg:grid-cols-4 xl:grid-cols-5">
-        {
-            currentProduct &&
-            <ResponseDialogDrawer
-        //   key={product.id}
+    <>
+      {currentProduct && (
+        <ResponseDialogDrawer
+          //   key={product.id}
           product={currentProduct}
-          open={currentProduct}
+          open={!!currentProduct}
           setOpen={setCurrentProduct}
-        />}
-      {filteredProducts.map((product) => (
+        />
+      )}
+      <div className="grid flex-1 grid-cols-2 content-start gap-3 py-2 pt-3 md:grid-cols-3 md:px-7 lg:grid-cols-4 xl:grid-cols-5">
+        {filteredProducts.map((product) => (
           <ProductCard
             key={product.id}
             product={product}
@@ -112,6 +115,7 @@ export function ProductDisplayCards({
           />
         ))}
         {/* </ResponseDialogDrawer> */}
-    </div>
+      </div>
+    </>
   );
 }

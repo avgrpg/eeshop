@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useIsMobile } from "~/hooks/use-mobile";
 import {
   Drawer,
@@ -8,7 +7,7 @@ import {
   DrawerContent,
   DrawerFooter,
   DrawerOverlay,
-  DrawerTrigger,
+  // DrawerTrigger,
 } from "./ui/drawer";
 import { Button } from "./ui/button";
 import {
@@ -18,7 +17,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  // DialogTrigger,
 } from "./ui/dialog";
 import {
   type Subcategory,
@@ -102,25 +101,28 @@ const ProductDisplay = ({
 };
 
 export function ResponseDialogDrawer({
-  children,
   product,
   open,
   setOpen,
 }: {
-  children: React.ReactNode;
   product: productsWithImagesAndTagsWithSubcategory;
   open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen: React.Dispatch<
+    React.SetStateAction<productsWithImagesAndTagsWithSubcategory | false>
+  >;
 }) {
   // const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
   // console.log(product);
   if (isMobile) {
     return (
-      <Drawer open={open} onOpenChange={setOpen}>
-        <DrawerTrigger asChild>
+      <Drawer
+        open={open}
+        onOpenChange={(open) => setOpen(open ? product : false)}
+      >
+        {/* <DrawerTrigger asChild>
           <div>{children}</div>
-        </DrawerTrigger>
+        </DrawerTrigger> */}
         <DrawerOverlay className="fixed inset-0 z-50 h-1/4 duration-300 fade-in-0">
           <div className="fixed top-0 h-full w-full bg-black/70 backdrop-blur-sm"></div>
           {product.images[0]?.url && (
@@ -163,21 +165,22 @@ export function ResponseDialogDrawer({
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+    <Dialog
+      open={open}
+      onOpenChange={(open) => setOpen(open ? product : false)}
+    >
+      {/* <DialogTrigger asChild>
         <div>{children}</div>
-      </DialogTrigger>
+      </DialogTrigger> */}
       <DialogContent className="min-w-[80vw]">
         <DialogHeader className="p-6">
-          <DialogTitle>
-            {product.name}
-          </DialogTitle>
+          <DialogTitle>{product.name}</DialogTitle>
           <DialogDescription className="sr-only">
             {product.description}
           </DialogDescription>
         </DialogHeader>
         <ProductDisplay product={product} />
-        <DialogFooter className="flex justify-center items-center pb-6 w-full sm:justify-center">
+        <DialogFooter className="flex w-full items-center justify-center pb-6 sm:justify-center">
           <div>
             <Button variant="outline" className="w-auto">
               How to Buy
