@@ -26,6 +26,7 @@ import {
 import Image from "next/image";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { ChevronLeft } from "lucide-react";
+import { HowToBuy } from "./how-to-buy";
 
 interface productsWithImagesAndTagsWithSubcategory
   extends ProductWithImagesAndTags {
@@ -154,9 +155,7 @@ export function ResponseDialogDrawer({
           <ProductDisplay product={product} />
           <DrawerFooter className="flex items-center pb-6">
             <div>
-              <Button variant="outline" className="w-auto">
-                How to Buy
-              </Button>
+              <HowToBuy />
             </div>
           </DrawerFooter>
         </DrawerContent>
@@ -182,9 +181,7 @@ export function ResponseDialogDrawer({
         <ProductDisplay product={product} />
         <DialogFooter className="flex w-full items-center justify-center pb-6 sm:justify-center">
           <div>
-            <Button variant="outline" className="w-auto">
-              How to Buy
-            </Button>
+            <HowToBuy />
           </div>
         </DialogFooter>
       </DialogContent>

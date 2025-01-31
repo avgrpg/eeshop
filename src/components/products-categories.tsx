@@ -23,7 +23,7 @@ export async function ProductsCategories({
   return (
     <>
       {/* Categories */}
-      <ScrollArea className="grid w-full justify-center pb-2" type="always">
+      <ScrollArea className="grid w-full justify-center mb-2 border-2 border-muted-foreground rounded-lg py-px" type="always">
         <div id="categories" className="flex md:gap-6 gap-1">
           <Link
             href="?urlcategory=0&urlsubcategory=0"
@@ -57,7 +57,7 @@ export async function ProductsCategories({
       {/* Subcategories */}
       {urlcategory !== 0 && subcategories.length > 0 && (
         <ScrollArea
-          className="my-2 grid w-full justify-center pb-2"
+          className="my-2 grid w-full justify-center mb-2 border-2 border-muted-foreground rounded-lg py-px"
           type="always"
         >
           <div className="flex md:gap-6 gap-1">

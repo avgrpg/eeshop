@@ -1,3 +1,5 @@
+import { cn } from "~/lib/utils";
+
 const contactItems = [
   {
     icon: (
@@ -105,7 +107,7 @@ const contactItems = [
     ),
     label: "Our main office",
     content: (
-      <p className="text-xl font-medium text-foreground max-w-60">
+      <p className="max-w-60 text-xl font-medium text-foreground">
         Rm 82, 20/F, 77-81, Glee Ind Bldg
         <br />
         Chai Wen Kok St, Tsuen Wan
@@ -114,12 +116,57 @@ const contactItems = [
   },
 ];
 
+export function AboutUsSection({
+  className,
+}: {
+  className?: string;
+}) {
+  return (
+    <div className={cn("grid gap-12 pb-16 md:grid-cols-2 lg:gap-24", className)}>
+      {/* Contact Card */}
+      <div className="rounded-2xl bg-background p-8 shadow-lg">
+        <div className="space-y-8">
+          {contactItems.map((item, index) => (
+            <div key={index} className="flex items-center gap-4">
+              {item.icon}
+              <div>
+                <p className="text-sm text-muted-foreground">{item.label}</p>
+                {item.content}
+              </div>
+            </div>
+          ))}
+
+          {/* Social Links */}
+          <div className="border-t border-border pt-6">
+            <p className="mb-4 max-w-xs text-sm text-muted-foreground">
+              Feel free to come and buy our products. Please contact us first if
+              making any appointments.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Map Section */}
+      <div className="overflow-hidden rounded-2xl bg-muted shadow-lg">
+        <iframe
+          title="Office Location"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3689.489269381036!2d114.10647161137274!3d22.372905540173978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3403f8ef92a0332d%3A0xf3b9dce9a0f6050a!2sGlee%20Industrial%20Building!5e0!3m2!1sen!2shk!4v1738343217295!5m2!1sen!2shk"
+          className="h-full min-h-[400px] w-full"
+          loading="lazy"
+          allowFullScreen
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </div>
+    </div>
+  );
+}
+
 export function AboutUs() {
   return (
     <>
       {/* Header Section */}
       <div className="p-10 text-center">
-        <h1 className="mb-4 text-3xl font-bold text-foreground">
+        <h1 className="mb-4 text-xl md:text-3xl font-bold text-foreground">
           About EE Shop
         </h1>
         <p className="mx-auto max-w-2xl text-xs font-medium text-muted-foreground md:text-sm">
@@ -129,42 +176,7 @@ export function AboutUs() {
         </p>
       </div>
 
-      {/* Content Grid */}
-      <div className="grid gap-12 pb-16 md:grid-cols-2 lg:gap-24">
-        {/* Contact Card */}
-        <div className="rounded-2xl bg-background p-8 shadow-lg">
-          <div className="space-y-8">
-            {contactItems.map((item, index) => (
-              <div key={index} className="flex items-center gap-4">
-                {item.icon}
-                <div>
-                  <p className="text-sm text-muted-foreground">{item.label}</p>
-                  {item.content}
-                </div>
-              </div>
-            ))}
-
-            {/* Social Links */}
-            <div className="border-t border-border pt-6">
-              <p className="mb-4 text-sm text-muted-foreground max-w-xs">
-                Feel free to come and buy our products. Please contact us first if making any appointments.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Map Section */}
-        <div className="overflow-hidden rounded-2xl bg-muted shadow-lg">
-          <iframe
-            title="Office Location"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3689.489269381036!2d114.10647161137274!3d22.372905540173978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3403f8ef92a0332d%3A0xf3b9dce9a0f6050a!2sGlee%20Industrial%20Building!5e0!3m2!1sen!2shk!4v1738343217295!5m2!1sen!2shk"
-            className="h-full min-h-[400px] w-full"
-            loading="lazy"
-            allowFullScreen
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </div>
-      </div>
+      <AboutUsSection />
     </>
   );
 }

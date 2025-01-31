@@ -27,7 +27,7 @@ const ProductCard = ({
       className="group relative h-64 cursor-pointer overflow-hidden"
       onClick={onClick}
     >
-      <div className="relative h-48 overflow-hidden rounded-lg bg-primary/20">
+      <div className="relative h-48 overflow-hidden rounded-lg bg-primary/20 shadow-md">
         {product.images[0]?.url && (
           <Image
             src={product.images[0].url}
@@ -90,7 +90,7 @@ export function ProductDisplayCards({
           setOpen={setCurrentProduct}
         />
       )}
-      <div className="grid flex-1 grid-cols-2 content-start gap-3 py-2 pt-3 md:grid-cols-3 md:px-7 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="grid flex-1 grid-cols-2 content-start gap-3 md:gap-6 py-2 pt-3 md:grid-cols-3 md:px-7 lg:grid-cols-4 xl:grid-cols-5">
         {filteredProducts.map((product) => (
           <ProductCard
             key={product.id}
