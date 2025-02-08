@@ -8,17 +8,16 @@ export async function ProductHero() {
   return (
     <div className="flex flex-col items-center justify-between gap-6 md:gap-10 lg:gap-12 md:flex-row md:p-2 lg:p-10 xl:p-16">
       <div className="flex max-w-xs flex-col gap-4 p-2 md:p-5">
-        <h1 className="text-3xl font-bold md:text-5xl">
-          Welcome to your new e-commerce store
+        <h1 className="text-3xl font-bold md:text-5xl tracking-wide l">
+          歡迎光臨 JOSEPH CHAN 的線上商店！
         </h1>
         <p className="text-xs font-medium text-muted-foreground md:text-sm">
-          Explore our wide selection of products and discover the best deals
-          available.
+          探索我們豐富的產品系列，發掘現有的優惠產品！
         </p>
         <div>
           <Button className="hidden rounded-full px-10 font-medium md:flex">
             <Link href="#products" prefetch={false}>
-              Expore Now
+              立即探索
             </Link>
           </Button>
         </div>

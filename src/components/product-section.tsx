@@ -51,10 +51,9 @@ export async function ProductSection({
       id="products"
     >
       <div className="flex flex-col gap-2 p-12 text-center">
-        <h2 className="text-xl font-bold md:text-3xl">Featured Products</h2>
+        <h2 className="text-xl font-bold md:text-3xl">產品:</h2>
         <small className="text-xs font-medium text-muted-foreground md:text-sm">
-          View all products. You can filter by subcategory. You can also sort by
-          price.
+          查看所有產品。您可以按子類別篩選。
         </small>
       </div>
 

@@ -1,14 +1,20 @@
 import "@uploadthing/react/styles.css";
 import "~/styles/globals.css";
 
-import { Rubik } from "next/font/google";
+import { Noto_Sans, Noto_Sans_TC, Rubik } from "next/font/google";
 import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 import { TopNav } from "~/components/top-nav";
 import { ThemeProvider } from "~/components/theme-provider";
 
-const rubik = Rubik({
+// const rubik = Rubik({
+//   subsets: ["latin"],
+//   display: "swap",
+//   variable: "--font-sans",
+// });
+
+const notoSans = Noto_Sans_TC({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-sans",
@@ -27,9 +33,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="zh">
         <body
-          className={`${rubik.className} grid h-screen grid-rows-[auto,1fr] antialiased`}
+          className={`${notoSans.className} grid h-screen grid-rows-[auto,1fr] antialiased`}
         >
           <ThemeProvider
             attribute="class"

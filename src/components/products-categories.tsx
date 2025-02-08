@@ -31,7 +31,7 @@ export async function ProductsCategories({
             prefetch={false}
           >
             <Button variant="category" aria-selected={urlcategory === 0}>
-              Everything
+              所有
             </Button>
           </Link>
           {categories.map((category) => (
@@ -67,7 +67,7 @@ export async function ProductsCategories({
               prefetch={false}
             >
               <Button variant="category" aria-selected={urlsubcategory === 0}>
-                Everything
+                所有
               </Button>
             </Link>
             {subcategories

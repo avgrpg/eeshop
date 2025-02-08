@@ -60,7 +60,7 @@ export function CarouselHero({
                     });
                   }}
                 >
-                  <Button>View More</Button>
+                  <Button>查看更多</Button>
                 </Link>
               </div>
             </section>

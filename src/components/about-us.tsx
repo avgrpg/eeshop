@@ -17,7 +17,7 @@ const contactItems = [
         />
       </svg>
     ),
-    label: "Call us directly",
+    label: "直接致電",
     content: (
       <a
         href="tel:+85292732754"
@@ -43,7 +43,7 @@ const contactItems = [
         />
       </svg>
     ),
-    label: "Visit our Carousel site 1",
+    label: "訪問我們的拍賣網站 1",
     content: (
       <a
         href="https://www.carousell.com.hk/u/josephchan17/"
@@ -71,7 +71,7 @@ const contactItems = [
         />
       </svg>
     ),
-    label: "Visit our Carousel site 2",
+    label: "訪問我們的拍賣網站 2",
     content: (
       <a
         href="https://www.carousell.com.hk/u/goodvalue4money/"
@@ -105,12 +105,12 @@ const contactItems = [
         />
       </svg>
     ),
-    label: "Our main office",
+    label: "親臨本店",
     content: (
       <p className="max-w-60 text-xl font-medium text-foreground">
-        Rm 82, 20/F, 77-81, Glee Ind Bldg
+        荃灣柴灣角街77-81號
         <br />
-        Chai Wen Kok St, Tsuen Wan
+        致利工業大廈20樓B2室
       </p>
     ),
   },
@@ -130,7 +130,7 @@ export function AboutUsSection({
             <div key={index} className="flex items-center gap-4">
               {item.icon}
               <div>
-                <p className="text-sm text-muted-foreground">{item.label}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.label}</p>
                 {item.content}
               </div>
             </div>
@@ -139,8 +139,7 @@ export function AboutUsSection({
           {/* Social Links */}
           <div className="border-t border-border pt-6">
             <p className="mb-4 max-w-xs text-sm text-muted-foreground">
-              Feel free to come and buy our products. Please contact us first if
-              making any appointments.
+              歡迎來購買我們的產品。如果要預約，請先與我們聯繫。
             </p>
           </div>
         </div>
@@ -150,7 +149,7 @@ export function AboutUsSection({
       <div className="overflow-hidden rounded-2xl bg-muted shadow-lg">
         <iframe
           title="Office Location"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3689.489269381036!2d114.10647161137274!3d22.372905540173978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3403f8ef92a0332d%3A0xf3b9dce9a0f6050a!2sGlee%20Industrial%20Building!5e0!3m2!1sen!2shk!4v1738343217295!5m2!1sen!2shk"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3689.489269381036!2d114.10647161137274!3d22.372905540173978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3403f8ef92a0332d%3A0xf3b9dce9a0f6050a!2sGlee%20Industrial%20Building!5e0!3m2!1sen!2shk!4v1738343217295!5m2!1sen!2shk&language=zh-TW"
           className="h-full min-h-[400px] w-full"
           loading="lazy"
           allowFullScreen
@@ -167,7 +166,7 @@ export function AboutUs() {
       {/* Header Section */}
       <div className="p-10 text-center">
         <h1 className="mb-4 text-xl md:text-3xl font-bold text-foreground">
-          About EE Shop
+          關於 JOSEPH CHAN
         </h1>
         <p className="mx-auto max-w-2xl text-xs font-medium text-muted-foreground md:text-sm">
           Crafting digital experiences that inspire and connect since 2015.
