@@ -348,9 +348,24 @@ export const deleteCategory = async (categoryId: number) => {
 
   console.log("deleteCategory");
   try {
-    await db
+    const deleteCategory = await db
       .delete(categories)
-      .where(eq(categories.id, categoryId));
+      .where(eq(categories.id, categoryId))
+      .returning();
+    if (deleteCategory.length > 0) {
+      const utapi = new UTApi();
+      await utapi.deleteFiles(
+        deleteCategory
+          .map((cat) => {
+            if (!cat.imageUrl) return "";
+            const imageId = cat.imageUrl.split("/").pop();
+            if (!imageId) return "";
+            return imageId;
+          })
+          .filter((imageId) => imageId),
+      )
+    }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (_err) {
     return {
       message: "Error",
