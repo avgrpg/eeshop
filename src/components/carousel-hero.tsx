@@ -10,6 +10,7 @@ import { type Category } from "~/server/queries";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { blurDataURL } from "~/constant";
 
 export function CarouselHero({
   className,
@@ -38,6 +39,8 @@ export function CarouselHero({
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
+                  placeholder="blur"
+                  blurDataURL={blurDataURL}
                 />
               )}
               <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b to-transparent from-black/50 blur-3xl"></div>

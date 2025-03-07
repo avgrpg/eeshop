@@ -7,6 +7,7 @@ import { ResponseDialogDrawer } from "./response-dialog-drawer";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { blurDataURL } from "~/constant";
 
 interface productsWithImagesAndTagsWithSubcategory
   extends ProductWithImagesAndTags {
@@ -27,7 +28,7 @@ const ProductCard = ({
       className="group relative h-64 cursor-pointer overflow-hidden"
       onClick={onClick}
     >
-      <div className="relative h-48 overflow-hidden rounded-lg bg-primary/20 shadow-md">
+      <div className="relative h-48 overflow-hidden rounded-lg shadow-md">
         {product.images[0]?.url && (
           <Image
             src={product.images[0].url}
@@ -37,6 +38,8 @@ const ProductCard = ({
             fill
             className="object-cover"
             sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
+            placeholder="blur"
+            blurDataURL={blurDataURL}
           />
         )}
         {tag}

@@ -6,10 +6,12 @@ import { getProductCategories } from "~/server/queries";
 export async function ProductHero() {
   const { categories } = await getProductCategories();
   return (
-    <div className="flex flex-col items-center justify-between gap-6 md:gap-10 lg:gap-12 md:flex-row md:p-2 lg:p-10 xl:p-16">
-      <div className="flex max-w-xs flex-col gap-4 p-2 md:p-5">
-        <h1 className="text-3xl font-bold md:text-5xl tracking-wide l">
-          歡迎光臨 JOSEPH CHAN 的線上商店！
+    <div className="flex flex-col items-center justify-between gap-6 md:flex-row md:gap-10 md:p-2 lg:gap-12 lg:p-10 xl:p-16">
+      <div className="flex max-w-sm flex-col gap-4 p-2 md:p-5">
+        <h1 className="l text-3xl font-bold tracking-wide md:text-5xl">
+          歡迎光臨
+          <span className="whitespace-nowrap">JOSEPH CHAN</span>
+          的線上商店！
         </h1>
         <p className="text-xs font-medium text-muted-foreground md:text-sm">
           探索我們豐富的產品系列，發掘現有的優惠產品！

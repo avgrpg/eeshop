@@ -27,6 +27,7 @@ import Image from "next/image";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { ChevronLeft } from "lucide-react";
 import { HowToBuy } from "./how-to-buy";
+import { blurDataURL } from "~/constant";
 
 interface productsWithImagesAndTagsWithSubcategory
   extends ProductWithImagesAndTags {
@@ -70,6 +71,8 @@ const ProductDisplay = ({
                 width={200}
                 height={160}
                 className="h-40 w-auto rounded-sm"
+                placeholder="blur"
+                blurDataURL={blurDataURL}
               />
             ))}
           </div>
@@ -135,6 +138,8 @@ export function ResponseDialogDrawer({
               fill
               className="object-cover brightness-50"
               sizes="100vw"
+              placeholder="blur"
+              blurDataURL={blurDataURL}
             />
           )}
           <div className="fixed top-0 flex h-1/5 max-w-[85%] items-end py-4 pl-12 text-background">
