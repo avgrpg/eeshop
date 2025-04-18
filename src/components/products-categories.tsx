@@ -44,6 +44,7 @@ export function ProductsCategories({
             href="?urlcategory=0&urlsubcategory=0"
             scroll={false}
             prefetch={false}
+            shallow
           >
             <Button variant="category" aria-selected={urlcategory === 0}>
               所有
@@ -56,6 +57,7 @@ export function ProductsCategories({
               key={category.id}
               prefetch={false}
               id={`category-${category.id}`}
+              shallow
             >
               <Button
                 variant="category"
@@ -80,6 +82,7 @@ export function ProductsCategories({
               href={`?urlcategory=${urlcategory}&urlsubcategory=0`}
               scroll={false}
               prefetch={false}
+              shallow
             >
               <Button variant="category" aria-selected={urlsubcategory === 0}>
                 所有
@@ -94,6 +97,7 @@ export function ProductsCategories({
                   key={subcategory.id}
                   prefetch={false}
                   id={`subcategory-${subcategory.id}`}
+                  shallow
                 >
                   <Button
                     variant="category"

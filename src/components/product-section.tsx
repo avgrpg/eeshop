@@ -81,12 +81,6 @@ export async function ProductSection({
         </small>
       </div>
 
-    <Suspense
-      fallback={<div>Loading...</div>}
-      // key={`${urlcategory}-${urlsubcategory}`}
-      key={key}
-    >
-
       <ProductsCategories
         // searchParams={searchParams}
         // urlcategory={urlcategory}
@@ -94,7 +88,6 @@ export async function ProductSection({
         categories={categories}
         subcategories={subcategories}
         />
-</Suspense>
 
       {/* <Suspense
         fallback={<ProductLoading />}
