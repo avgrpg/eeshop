@@ -1,14 +1,14 @@
 "use client";
 
 import {
-  getProductsWithImagesnTags,
-  getProductCategories,
-  ProductWithImagesAndTags,
-  ProductWithImagesAndTag,
-  Subcategory,
+  type ProductWithImagesAndTags,
+  type Subcategory,
 } from "~/server/queries";
 import { ProductDisplayCards } from "./product-display-cards";
-import { urlCategorySchema, urlSchema, urlSubcategorySchema } from "~/schema/url-schema";
+import {
+  urlCategorySchema,
+  urlSubcategorySchema,
+} from "~/schema/url-schema";
 import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 
@@ -38,8 +38,10 @@ export function ProductsDisplay({
   // const urlParams = await searchParams;
   const urlParams = useSearchParams();
 
-  const urlcategory = urlCategorySchema.safeParse(urlParams.get("urlcategory")).data ?? 0;
-  const urlsubcategory = urlSubcategorySchema.safeParse(urlParams.get("urlsubcategory")).data ?? 0;
+  const urlcategory =
+    urlCategorySchema.safeParse(urlParams.get("urlcategory")).data ?? 0;
+  const urlsubcategory =
+    urlSubcategorySchema.safeParse(urlParams.get("urlsubcategory")).data ?? 0;
 
   // const parsedUrlcategory = urlSchema.safeParse(urlParams);
   // const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
@@ -84,9 +86,9 @@ export function ProductsDisplay({
   //     );
   //   },
   // );
-  const filteredProducts = useMemo(() => 
-    productsWithImagesAndTagsWithSubcategory.filter(
-      (product) => {
+  const filteredProducts = useMemo(
+    () =>
+      productsWithImagesAndTagsWithSubcategory.filter((product) => {
         if (urlcategory === 0) {
           return true;
         }
@@ -97,14 +99,12 @@ export function ProductsDisplay({
           product.subcategory?.categoryId === urlcategory &&
           product.subcategory?.id === urlsubcategory
         );
-      },
-    ), [urlcategory, urlsubcategory, productsWithImagesAndTagsWithSubcategory]);
+      }),
+    [urlcategory, urlsubcategory, productsWithImagesAndTagsWithSubcategory],
+  );
 
-  if (filteredProducts.length === 0) return (
-    <div className="pt-3 font-semibold">
-      未找到產品
-    </div>
-  )
+  if (filteredProducts.length === 0)
+    return <div className="pt-3 font-semibold">未找到產品</div>;
 
   return (
     <ProductDisplayCards

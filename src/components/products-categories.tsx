@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { Button } from "./ui/button";
-import { Category, getProductCategories, Subcategory } from "~/server/queries";
-import { urlCategorySchema, urlSchema, urlSubcategorySchema } from "~/schema/url-schema";
+import { type Category, type Subcategory } from "~/server/queries";
+import { urlCategorySchema, urlSubcategorySchema } from "~/schema/url-schema";
 import { useSearchParams } from "next/navigation";
 
 export function ProductsCategories({
