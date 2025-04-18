@@ -8,6 +8,7 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { blurDataURL } from "~/constant";
+import { ImageWithLoader } from "./ImageWithLoader";
 
 interface productsWithImagesAndTagsWithSubcategory
   extends ProductWithImagesAndTags {
@@ -30,7 +31,7 @@ const ProductCard = ({
     >
       <div className="relative h-48 overflow-hidden rounded-lg shadow-md">
         {product.images[0]?.url && (
-          <Image
+          <ImageWithLoader
             src={product.images[0].url}
             alt={product.images[0].url}
             // width={200}
@@ -38,8 +39,8 @@ const ProductCard = ({
             fill
             className="object-cover"
             sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
-            placeholder="blur"
-            blurDataURL={blurDataURL}
+            // placeholder="blur"
+            // blurDataURL={blurDataURL}
           />
         )}
         {tag}
