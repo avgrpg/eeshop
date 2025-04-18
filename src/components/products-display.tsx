@@ -40,7 +40,7 @@ export function ProductsDisplay({
 
   const urlcategory = urlCategorySchema.safeParse(urlParams.get("urlcategory")).data ?? 0;
   const urlsubcategory = urlSubcategorySchema.safeParse(urlParams.get("urlsubcategory")).data ?? 0;
-  
+
   // const parsedUrlcategory = urlSchema.safeParse(urlParams);
   // const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
   // const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
@@ -99,6 +99,12 @@ export function ProductsDisplay({
         );
       },
     ), [urlcategory, urlsubcategory, productsWithImagesAndTagsWithSubcategory]);
+
+  if (filteredProducts.length === 0) return (
+    <div className="pt-3 font-semibold">
+      未找到產品
+    </div>
+  )
 
   return (
     <ProductDisplayCards

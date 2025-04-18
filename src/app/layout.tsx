@@ -33,7 +33,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="zh">
+      <html lang="zh" suppressHydrationWarning>
         <body
           className={`${notoSans.className} grid h-screen grid-rows-[auto,1fr] antialiased`}
         >
@@ -41,7 +41,7 @@ export default function RootLayout({
             attribute="class"
             defaultTheme="system"
             enableSystem
-            // disableTransitionOnChange
+            disableTransitionOnChange
           >
           <TopNav />
           {children}
