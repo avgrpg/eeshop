@@ -7,10 +7,9 @@ import {
 } from "~/components/ui/carousel";
 import { cn } from "~/lib/utils";
 import { type Category } from "~/server/queries";
-import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { blurDataURL } from "~/constant";
+import { ImageWithLoader } from "./ImageWithLoader";
 
 export function CarouselHero({
   className,
@@ -33,14 +32,14 @@ export function CarouselHero({
           <CarouselItem key={category.id}>
             <section className="relative aspect-video w-full cursor-pointer overflow-hidden rounded-3xl">
               {category.imageUrl && (
-                <Image
+                <ImageWithLoader
                   src={category.imageUrl}
                   alt={category.name}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
-                  placeholder="blur"
-                  blurDataURL={blurDataURL}
+                  // placeholder="blur"
+                  // blurDataURL={blurDataURL}
                 />
               )}
               <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-b to-transparent from-black/50 blur-3xl"></div>

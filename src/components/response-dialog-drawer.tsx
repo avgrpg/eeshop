@@ -5,8 +5,10 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
+  DrawerDescription,
   DrawerFooter,
   DrawerOverlay,
+  DrawerTitle,
   // DrawerTrigger,
 } from "./ui/drawer";
 import { Button } from "./ui/button";
@@ -28,6 +30,7 @@ import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { ChevronLeft } from "lucide-react";
 import { HowToBuy } from "./how-to-buy";
 import { blurDataURL } from "~/constant";
+import { ImageWithLoader } from "./ImageWithLoader";
 
 interface productsWithImagesAndTagsWithSubcategory
   extends ProductWithImagesAndTags {
@@ -64,15 +67,15 @@ const ProductDisplay = ({
         {product.images.length > 0 && (
           <div className="flex gap-2 py-2">
             {product.images.map((image) => (
-              <Image
+              <ImageWithLoader
                 key={image.url}
                 src={image.url}
                 alt={image.url}
                 width={200}
                 height={160}
                 className="h-40 w-auto rounded-sm"
-                placeholder="blur"
-                blurDataURL={blurDataURL}
+                // placeholder="blur"
+                // blurDataURL={blurDataURL}
               />
             ))}
           </div>
@@ -81,7 +84,7 @@ const ProductDisplay = ({
       </ScrollArea>
 
       <div className="pb-2 pt-4">
-        <p className="text-sm font-medium text-muted-foreground">
+        <p className="whitespace-pre-line text-sm font-medium text-muted-foreground">
           {product.description}
         </p>
       </div>
@@ -130,7 +133,7 @@ export function ResponseDialogDrawer({
         <DrawerOverlay className="fixed inset-0 z-50 h-1/4 duration-300 fade-in-0">
           <div className="fixed top-0 h-full w-full bg-black/70 backdrop-blur-sm"></div>
           {product.images[0]?.url && (
-            <Image
+            <ImageWithLoader
               src={product.images[0].url}
               alt={product.images[0].url}
               // width={200}
@@ -138,13 +141,16 @@ export function ResponseDialogDrawer({
               fill
               className="object-cover brightness-50"
               sizes="100vw"
-              placeholder="blur"
-              blurDataURL={blurDataURL}
+              loaderClassName="bg-muted/10"
+              // placeholder="blur"
+              // blurDataURL={blurDataURL}
             />
           )}
           <div className="fixed top-0 flex h-1/5 max-w-[85%] items-end py-4 pl-12 text-background">
             <div className="flex min-h-20 items-center">
-              <h2 className="text-2xl font-bold">{product.name}</h2>
+              <DrawerTitle className="text-2xl font-bold">
+                {product.name}
+              </DrawerTitle>
             </div>
           </div>
           <div className="fixed top-0 px-4 py-5 text-background">
@@ -157,6 +163,9 @@ export function ResponseDialogDrawer({
           </div>
         </DrawerOverlay>
         <DrawerContent className="h-4/5 rounded-t-2xl">
+          <DrawerDescription className="sr-only">
+            {product.description}
+          </DrawerDescription>
           <ProductDisplay product={product} />
           <DrawerFooter className="flex items-center pb-6">
             <div>
