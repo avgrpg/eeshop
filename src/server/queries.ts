@@ -59,6 +59,10 @@ export const getProductsWithImagesnTags = unstable_cache(
   },
 );
 
+export type ProductWithImagesAndTag = Awaited<
+  ReturnType<typeof getProductsWithImagesnTags>
+>;
+
 export type ProductWithImagesAndTags = Awaited<
   ReturnType<typeof getProductsWithImagesnTags>
 >[number];

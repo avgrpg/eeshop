@@ -1,30 +1,39 @@
-"use server";
+"use client";
 
 import Link from "next/link";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { Button } from "./ui/button";
-import { getProductCategories } from "~/server/queries";
-import { urlSchema } from "~/schema/url-schema";
+import { Category, getProductCategories, Subcategory } from "~/server/queries";
+import { urlCategorySchema, urlSchema, urlSubcategorySchema } from "~/schema/url-schema";
+import { useSearchParams } from "next/navigation";
 
-export async function ProductsCategories({
+export function ProductsCategories({
   // urlcategory,
   // urlsubcategory,
-  searchParams,
+  // searchParams,
+  categories,
+  subcategories,
 }: {
   // urlcategory: number;
   // urlsubcategory: number;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
+  // searchParams: Promise<Record<string, string | string[] | undefined>>;
+  categories: Category[];
+  subcategories: Subcategory[];
 }) {
   // const urlParams = await searchParams;
   // const parsedUrlcategory = urlSchema.safeParse(urlParams);
   // const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
   // const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
-  const urlParams = await searchParams;
-  const parsedUrlcategory = urlSchema.safeParse(urlParams);
-  const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
-  const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
+  const searchParams = useSearchParams();
+  const urlcategory = urlCategorySchema.safeParse(searchParams.get("urlcategory")).data ?? 0;
+  const urlsubcategory = urlSubcategorySchema.safeParse(searchParams.get("urlsubcategory")).data ?? 0;
+
+  // const urlParams = await searchParams;
+  // const parsedUrlcategory = urlSchema.safeParse(searchParams);
+  // const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
+  // const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
   
-  const { categories, subcategories } = await getProductCategories();
+  // const { categories, subcategories } = await getProductCategories();
 
   return (
     <>

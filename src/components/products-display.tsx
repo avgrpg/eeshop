@@ -1,70 +1,104 @@
+"use client";
+
 import {
   getProductsWithImagesnTags,
   getProductCategories,
+  ProductWithImagesAndTags,
+  ProductWithImagesAndTag,
+  Subcategory,
 } from "~/server/queries";
 import { ProductDisplayCards } from "./product-display-cards";
-import { urlSchema } from "~/schema/url-schema";
+import { urlCategorySchema, urlSchema, urlSubcategorySchema } from "~/schema/url-schema";
+import { useSearchParams } from "next/navigation";
+import { useMemo } from "react";
 
 // interface productsWithImagesAndTagsWithSubcategory
 //   extends ProductWithImagesAndTags {
 //   subcategory: Subcategory | undefined;
 // }
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+// const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export async function ProductsDisplay({
+interface ProductsWithImagesAndTagsWithSubcategory
+  extends ProductWithImagesAndTags {
+  subcategory: Subcategory | undefined;
+}
+
+export function ProductsDisplay({
   // urlcategory,
   // urlsubcategory,
-  searchParams,
+  // searchParams,
+  productsWithImagesAndTagsWithSubcategory,
 }: {
   // urlcategory: number;
   // urlsubcategory: number;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
+  // searchParams: Promise<Record<string, string | string[] | undefined>>;
+  productsWithImagesAndTagsWithSubcategory: ProductsWithImagesAndTagsWithSubcategory[];
 }) {
-  const urlParams = await searchParams;
-  const parsedUrlcategory = urlSchema.safeParse(urlParams);
-  const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
-  const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
-  const productsWithImagesAndTagsData = getProductsWithImagesnTags();
-  const productsCategoriesData = getProductCategories();
+  // const urlParams = await searchParams;
+  const urlParams = useSearchParams();
 
-  const [productsWithImagesAndTags, { subcategories }] =
-    await Promise.all([
-      productsWithImagesAndTagsData,
-      productsCategoriesData,
-      // searchParams,
-      delay(300),
-    ]);
+  const urlcategory = urlCategorySchema.safeParse(urlParams.get("urlcategory")).data ?? 0;
+  const urlsubcategory = urlSubcategorySchema.safeParse(urlParams.get("urlsubcategory")).data ?? 0;
+  
+  // const parsedUrlcategory = urlSchema.safeParse(urlParams);
+  // const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
+  // const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
+  // const productsWithImagesAndTagsData = getProductsWithImagesnTags();
+  // const productsCategoriesData = getProductCategories();
+
+  // const [productsWithImagesAndTags, { subcategories }] =
+  //   await Promise.all([
+  //     productsWithImagesAndTagsData,
+  //     productsCategoriesData,
+  //     // searchParams,
+  //     delay(300),
+  //   ]);
 
   // const urlParams = await searchParams;
   // const parsedUrlcategory = urlSchema.safeParse(urlParams);
   // const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
   // const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
 
-  const productsWithImagesAndTagsWithSubcategory =
-    productsWithImagesAndTags.map((product) => {
-      return {
-        ...product,
-        subcategory: subcategories.find(
-          (subcategory) => subcategory.id === product.subcategoryId,
-        ),
-      };
-    });
+  // const productsWithImagesAndTagsWithSubcategory =
+  //   productsWithImagesAndTags.map((product) => {
+  //     return {
+  //       ...product,
+  //       subcategory: subcategories.find(
+  //         (subcategory) => subcategory.id === product.subcategoryId,
+  //       ),
+  //     };
+  //   });
 
-  const filteredProducts = productsWithImagesAndTagsWithSubcategory.filter(
-    (product) => {
-      if (urlcategory === 0) {
-        return true;
-      }
-      if (urlsubcategory === 0) {
-        return product.subcategory?.categoryId === urlcategory;
-      }
-      return (
-        product.subcategory?.categoryId === urlcategory &&
-        product.subcategory?.id === urlsubcategory
-      );
-    },
-  );
+  // const filteredProducts = productsWithImagesAndTagsWithSubcategory.filter(
+  //   (product) => {
+  //     if (urlcategory === 0) {
+  //       return true;
+  //     }
+  //     if (urlsubcategory === 0) {
+  //       return product.subcategory?.categoryId === urlcategory;
+  //     }
+  //     return (
+  //       product.subcategory?.categoryId === urlcategory &&
+  //       product.subcategory?.id === urlsubcategory
+  //     );
+  //   },
+  // );
+  const filteredProducts = useMemo(() => 
+    productsWithImagesAndTagsWithSubcategory.filter(
+      (product) => {
+        if (urlcategory === 0) {
+          return true;
+        }
+        if (urlsubcategory === 0) {
+          return product.subcategory?.categoryId === urlcategory;
+        }
+        return (
+          product.subcategory?.categoryId === urlcategory &&
+          product.subcategory?.id === urlsubcategory
+        );
+      },
+    ), [urlcategory, urlsubcategory, productsWithImagesAndTagsWithSubcategory]);
 
   return (
     <ProductDisplayCards

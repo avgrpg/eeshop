@@ -3,6 +3,7 @@ import { ProductsCategories } from "./products-categories";
 import { Suspense } from "react";
 // import { urlSchema } from "~/schema/url-schema";
 import { Skeleton } from "./ui/skeleton";
+import { getProductCategories, getProductsWithImagesnTags } from "~/server/queries";
 
 const ProductLoading = () => (
   <div className="grid w-full flex-1 grid-cols-2 gap-3 py-2 pt-3 md:grid-cols-3 md:px-7 lg:grid-cols-4 xl:grid-cols-5">
@@ -40,11 +41,32 @@ export async function ProductSection({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const key = JSON.stringify(searchParams);
+  // const key = JSON.stringify(searchParams);
   // const urlParams = await searchParams;
   // const parsedUrlcategory = urlSchema.safeParse(urlParams);
   // const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
   // const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
+
+  const productsWithImagesAndTagsData = getProductsWithImagesnTags();
+  const productsCategoriesData = getProductCategories();
+
+  const [productsWithImagesAndTags, { subcategories, categories }] =
+    await Promise.all([
+      productsWithImagesAndTagsData,
+      productsCategoriesData,
+      // searchParams,
+      // delay(300),
+    ]);
+  
+  const productsWithImagesAndTagsWithSubcategory =
+    productsWithImagesAndTags.map((product) => {
+      return {
+        ...product,
+        subcategory: subcategories.find(
+          (subcategory) => subcategory.id === product.subcategoryId,
+        ),
+      };
+    });
 
   return (
     <section
@@ -58,29 +80,26 @@ export async function ProductSection({
         </small>
       </div>
 
-      <Suspense
-        fallback={<div>Loading...</div>}
-        // key={`${urlcategory}-${urlsubcategory}`}
-        // key={key}
-      >
-        <ProductsCategories
-          searchParams={searchParams}
-          // urlcategory={urlcategory}
-          // urlsubcategory={urlsubcategory}
-        />
-      </Suspense>
+      <ProductsCategories
+        // searchParams={searchParams}
+        // urlcategory={urlcategory}
+        // urlsubcategory={urlsubcategory}
+        categories={categories}
+        subcategories={subcategories}
+      />
 
-      <Suspense
+      {/* <Suspense
         fallback={<ProductLoading />}
         // key={`${urlcategory}-${urlsubcategory}`}
         key={key}
-      >
+      > */}
         <ProductsDisplay
-          searchParams={searchParams}
+          // searchParams={searchParams}
           // urlcategory={urlcategory}
           // urlsubcategory={urlsubcategory}
+          productsWithImagesAndTagsWithSubcategory={productsWithImagesAndTagsWithSubcategory}
         />
-      </Suspense>
+      {/* </Suspense> */}
     </section>
   );
 }
