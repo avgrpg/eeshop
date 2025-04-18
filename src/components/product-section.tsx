@@ -41,6 +41,7 @@ export async function ProductSection({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const urlParams = await searchParams;
+  const key = JSON.stringify(urlParams);
   const parsedUrlcategory = urlSchema.safeParse(urlParams);
   const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
   const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
@@ -65,7 +66,8 @@ export async function ProductSection({
 
       <Suspense
         fallback={<ProductLoading />}
-        key={`${urlcategory}-${urlsubcategory}`}
+        // key={`${urlcategory}-${urlsubcategory}`}
+        key={key}
       >
         <ProductsDisplay
           // searchParams={searchParams}
