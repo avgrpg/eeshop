@@ -3,6 +3,7 @@ import {
   getProductCategories,
 } from "~/server/queries";
 import { ProductDisplayCards } from "./product-display-cards";
+import { urlSchema } from "~/schema/url-schema";
 
 // interface productsWithImagesAndTagsWithSubcategory
 //   extends ProductWithImagesAndTags {
@@ -12,14 +13,18 @@ import { ProductDisplayCards } from "./product-display-cards";
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function ProductsDisplay({
-  urlcategory,
-  urlsubcategory,
-  // searchParams,
+  // urlcategory,
+  // urlsubcategory,
+  searchParams,
 }: {
-  urlcategory: number;
-  urlsubcategory: number;
-  // searchParams: Promise<Record<string, string | string[] | undefined>>;
+  // urlcategory: number;
+  // urlsubcategory: number;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const urlParams = await searchParams;
+  const parsedUrlcategory = urlSchema.safeParse(urlParams);
+  const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
+  const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
   const productsWithImagesAndTagsData = getProductsWithImagesnTags();
   const productsCategoriesData = getProductCategories();
 

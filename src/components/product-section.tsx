@@ -1,11 +1,11 @@
 import { ProductsDisplay } from "./products-display";
 import { ProductsCategories } from "./products-categories";
 import { Suspense } from "react";
-import { urlSchema } from "~/schema/url-schema";
+// import { urlSchema } from "~/schema/url-schema";
 import { Skeleton } from "./ui/skeleton";
 
 const ProductLoading = () => (
-  <div className="w-full grid flex-1 grid-cols-2 gap-3 py-2 pt-3 md:grid-cols-3 md:px-7 lg:grid-cols-4 xl:grid-cols-5">
+  <div className="grid w-full flex-1 grid-cols-2 gap-3 py-2 pt-3 md:grid-cols-3 md:px-7 lg:grid-cols-4 xl:grid-cols-5">
     {Array.from({ length: 6 }).map((_, i) => (
       <Skeleton
         key={i}
@@ -40,11 +40,11 @@ export async function ProductSection({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const urlParams = await searchParams;
-  const key = JSON.stringify(urlParams);
-  const parsedUrlcategory = urlSchema.safeParse(urlParams);
-  const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
-  const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
+  const key = JSON.stringify(searchParams);
+  // const urlParams = await searchParams;
+  // const parsedUrlcategory = urlSchema.safeParse(urlParams);
+  // const urlcategory = parsedUrlcategory.data?.urlcategory ?? 0;
+  // const urlsubcategory = parsedUrlcategory.data?.urlsubcategory ?? 0;
 
   return (
     <section
@@ -58,11 +58,17 @@ export async function ProductSection({
         </small>
       </div>
 
-      <ProductsCategories
-        // searchParams={searchParams}
-        urlcategory={urlcategory}
-        urlsubcategory={urlsubcategory}
-      />
+      <Suspense
+        fallback={<div>Loading...</div>}
+        // key={`${urlcategory}-${urlsubcategory}`}
+        // key={key}
+      >
+        <ProductsCategories
+          searchParams={searchParams}
+          // urlcategory={urlcategory}
+          // urlsubcategory={urlsubcategory}
+        />
+      </Suspense>
 
       <Suspense
         fallback={<ProductLoading />}
@@ -70,9 +76,9 @@ export async function ProductSection({
         key={key}
       >
         <ProductsDisplay
-          // searchParams={searchParams}
-          urlcategory={urlcategory}
-          urlsubcategory={urlsubcategory}
+          searchParams={searchParams}
+          // urlcategory={urlcategory}
+          // urlsubcategory={urlsubcategory}
         />
       </Suspense>
     </section>
