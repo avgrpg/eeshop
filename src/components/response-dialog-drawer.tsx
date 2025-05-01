@@ -112,7 +112,7 @@ export function ResponseDialogDrawer({
   open,
   setOpen,
 }: {
-  product: productsWithImagesAndTagsWithSubcategory;
+  product: productsWithImagesAndTagsWithSubcategory | false;
   open: boolean;
   setOpen: React.Dispatch<
     React.SetStateAction<productsWithImagesAndTagsWithSubcategory | false>
@@ -132,7 +132,7 @@ export function ResponseDialogDrawer({
         </DrawerTrigger> */}
         <DrawerOverlay className="fixed inset-0 z-50 h-1/4 duration-300 fade-in-0">
           <div className="fixed top-0 h-full w-full bg-black/70 backdrop-blur-sm"></div>
-          {product.images[0]?.url && (
+          {product && product.images[0]?.url && (
             <ImageWithLoader
               src={product.images[0].url}
               alt={product.images[0].url}
@@ -149,7 +149,7 @@ export function ResponseDialogDrawer({
           <div className="fixed top-0 flex h-1/5 max-w-[85%] items-end py-4 pl-12 text-background">
             <div className="flex min-h-20 items-center">
               <DrawerTitle className="text-2xl font-bold">
-                {product.name}
+                {product && product.name}
               </DrawerTitle>
             </div>
           </div>
@@ -164,9 +164,9 @@ export function ResponseDialogDrawer({
         </DrawerOverlay>
         <DrawerContent className="h-4/5 rounded-t-2xl">
           <DrawerDescription className="sr-only">
-            {product.description}
+            {product && product.description}
           </DrawerDescription>
-          <ProductDisplay product={product} />
+          {product && <ProductDisplay product={product} />}
           <DrawerFooter className="flex items-center pb-6">
             <div>
               <HowToBuy />
@@ -187,12 +187,12 @@ export function ResponseDialogDrawer({
       </DialogTrigger> */}
       <DialogContent className="min-w-[80vw]">
         <DialogHeader className="p-6">
-          <DialogTitle>{product.name}</DialogTitle>
+          <DialogTitle>{product && product.name}</DialogTitle>
           <DialogDescription className="sr-only">
-            {product.description}
+            {product && product.description}
           </DialogDescription>
         </DialogHeader>
-        <ProductDisplay product={product} />
+        {product && <ProductDisplay product={product} />}
         <DialogFooter className="flex w-full items-center justify-center pb-6 sm:justify-center">
           <div>
             <HowToBuy />

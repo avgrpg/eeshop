@@ -86,14 +86,14 @@ export function ProductDisplayCards({
 
   return (
     <>
-      {currentProduct && (
+      {/* {currentProduct && ( */}
         <ResponseDialogDrawer
           //   key={product.id}
           product={currentProduct}
           open={!!currentProduct}
           setOpen={setCurrentProduct}
         />
-      )}
+      {/* // )} */}
       <div className="grid flex-1 grid-cols-2 content-start gap-3 md:gap-6 py-2 pt-3 md:grid-cols-3 md:px-7 lg:grid-cols-4 xl:grid-cols-5">
         {filteredProducts.map((product) => (
           <ProductCard
