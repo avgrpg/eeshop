@@ -4,10 +4,8 @@ import {
   type ProductWithImagesAndTags,
 } from "~/server/queries";
 import { ResponseDialogDrawer } from "./response-dialog-drawer";
-import Image from "next/image";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import { blurDataURL } from "~/constant";
 import { ImageWithLoader } from "./ImageWithLoader";
 
 interface productsWithImagesAndTagsWithSubcategory

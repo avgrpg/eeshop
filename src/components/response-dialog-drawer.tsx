@@ -11,7 +11,6 @@ import {
   DrawerTitle,
   // DrawerTrigger,
 } from "./ui/drawer";
-import { Button } from "./ui/button";
 import {
   Dialog,
   DialogContent,
@@ -25,11 +24,9 @@ import {
   type Subcategory,
   type ProductWithImagesAndTags,
 } from "~/server/queries";
-import Image from "next/image";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { ChevronLeft } from "lucide-react";
 import { HowToBuy } from "./how-to-buy";
-import { blurDataURL } from "~/constant";
 import { ImageWithLoader } from "./ImageWithLoader";
 
 interface productsWithImagesAndTagsWithSubcategory
