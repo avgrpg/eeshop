@@ -10,7 +10,7 @@ export async function ProductHero() {
       <div className="flex max-w-sm flex-col gap-4 p-2 md:p-5">
         <h1 className="l text-3xl font-bold tracking-wide md:text-5xl">
           歡迎光臨
-          <span className="whitespace-nowrap">JOSEPH CHAN</span>
+          <span className="whitespace-nowrap">eeshophk</span>
           的線上商店！
         </h1>
         <p className="text-xs font-medium text-muted-foreground md:text-sm">

@@ -20,10 +20,10 @@ const contactItems = [
     label: "直接致電",
     content: (
       <a
-        href="tel:+85292732754"
+        href="tel:+85291448754"
         className="text-xl font-medium text-foreground transition hover:text-primary"
       >
-        +852 9273 2754
+        +852 9144 8754
       </a>
     ),
   },
@@ -124,7 +124,7 @@ export function AboutUsSection({
   return (
     <div className={cn("grid gap-12 pb-16 md:grid-cols-2 lg:gap-24", className)}>
       {/* Contact Card */}
-      <div className="rounded-2xl bg-background p-8 shadow-lg">
+      <div className="rounded-2xl bg-background p-8 shadow-lg border">
         <div className="space-y-8">
           {contactItems.map((item, index) => (
             <div key={index} className="flex items-center gap-4">
@@ -166,13 +166,13 @@ export function AboutUs() {
       {/* Header Section */}
       <div className="p-10 text-center">
         <h1 className="mb-4 text-xl md:text-3xl font-bold text-foreground">
-          關於 JOSEPH CHAN
+          關於 eeshophk
         </h1>
-        <p className="mx-auto max-w-2xl text-xs font-medium text-muted-foreground md:text-sm">
+        {/* <p className="mx-auto max-w-2xl text-xs font-medium text-muted-foreground md:text-sm">
           Crafting digital experiences that inspire and connect since 2015.
           We&apos;re a passionate team of designers and developers based in
           Portland.
-        </p>
+        </p> */}
       </div>
 
       <AboutUsSection />
