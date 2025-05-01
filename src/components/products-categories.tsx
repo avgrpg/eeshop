@@ -43,7 +43,7 @@ export function ProductsCategories({
           <Link
             href="?urlcategory=0&urlsubcategory=0"
             scroll={false}
-            prefetch={false}
+            // prefetch={false}
             shallow
           >
             <Button variant="category" aria-selected={urlcategory === 0}>
@@ -55,7 +55,7 @@ export function ProductsCategories({
               href={`?urlcategory=${category.id}&urlsubcategory=0`}
               scroll={false}
               key={category.id}
-              prefetch={false}
+              // prefetch={false}
               id={`category-${category.id}`}
               shallow
             >
@@ -81,7 +81,7 @@ export function ProductsCategories({
             <Link
               href={`?urlcategory=${urlcategory}&urlsubcategory=0`}
               scroll={false}
-              prefetch={false}
+              // prefetch={false}
               shallow
             >
               <Button variant="category" aria-selected={urlsubcategory === 0}>
@@ -95,7 +95,7 @@ export function ProductsCategories({
                   href={`?urlcategory=${urlcategory}&urlsubcategory=${subcategory.id}`}
                   scroll={false}
                   key={subcategory.id}
-                  prefetch={false}
+                  // prefetch={false}
                   id={`subcategory-${subcategory.id}`}
                   shallow
                 >

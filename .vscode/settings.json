@@ -1,5 +1,53 @@
 {
-    "indentRainbow.indicatorStyle": "light",
-    "typescript.tsdk": "node_modules\\typescript\\lib",
-    "editor.fontSize": 16
+  "indentRainbow.indicatorStyle": "light",
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "editor.fontSize": 16,
+
+  "search.useIgnoreFiles": false,
+  "search.exclude": {
+    "dev-cache": true
+  },
+  "vscode_custom_css.imports": [
+    // Absolute file paths for your css/js files
+    // For Mac or Linux
+    // "file:///Users/your-user-name/custom-vscode.css"
+    // "file:///Users/your-user-name/custom-vscode-script.js"
+    "file:///Users/waichiutsui/Documents/VSCode/vscode-config.css",
+    // "file:///Users/waichiutsui/Documents/VSCode/vscode-config-new.css",
+    "file:////Users/waichiutsui/Documents/VSCode/vscode-config-script.js"
+
+    // For Windows
+    // "file:///C:/path-of-custom-css/custom-vscode.css"
+    // "file:///C:/path-of-custom-css/custom-vscode-script.js"
+  ],
+  "editor.minimap.autohide": true,
+
+  // Enables font ligatures
+  "editor.fontLigatures": "'ss01','ss05','dlig'",
+  // Controls if file decorations should use badges.
+  "explorer.decorations.badges": false,
+
+  "workbench.colorCustomizations": {
+    "activityBar.activeBorder": "#bc9abc",
+    "editorWidget.resizeBorder": "#bc9abc",
+    "editorGroup.border": "#1e1e1e00",
+    "tab.unfocusedInactiveBackground": "#24273A00",
+    "tab.unfocusedActiveBackground": "#00000000",
+    "tab.activeBackground": "#ffffff10",
+    "editorOverviewRuler.background": "#1e1e1e00",
+    "editorOverviewRuler.border": "#1e1e1e00"
+  },
+  "editor.minimap.enabled": false,
+  "editor.wordWrap": "wordWrapColumn",
+  "breadcrumbs.enabled": false,
+  "files.associations": {
+    // "*.css": "tailwindcss"
+  },
+
+  "editor.fontFamily": "'JetbrainsMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
+  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
+  "catppuccin.extraBordersEnabled": false,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.guides.bracketPairsHorizontal": true
 }
