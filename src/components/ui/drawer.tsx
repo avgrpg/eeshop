@@ -17,6 +17,8 @@ const Drawer = ({
 )
 Drawer.displayName = "Drawer"
 
+const DrawerNestedRoot = DrawerPrimitive.NestedRoot
+
 const DrawerTrigger = DrawerPrimitive.Trigger
 
 const DrawerPortal = DrawerPrimitive.Portal
@@ -133,6 +135,7 @@ DrawerDescription.displayName = DrawerPrimitive.Description.displayName
 
 export {
   Drawer,
+  DrawerNestedRoot,
   DrawerPortal,
   DrawerOverlay,
   DrawerTrigger,

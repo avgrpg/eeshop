@@ -1,8 +1,8 @@
 import { useIsMobile } from "~/hooks/use-mobile";
 import { Button } from "./ui/button";
 import {
-  Drawer,
   DrawerContent,
+  DrawerNestedRoot,
   DrawerTrigger,
 } from "./ui/drawer";
 import {
@@ -18,7 +18,7 @@ export function HowToBuy() {
 
   if (isMobile) {
     return (
-      <Drawer>
+      <DrawerNestedRoot>
         <DrawerTrigger asChild>
           <Button variant="outline" className="w-auto">
             How to Buy
@@ -30,7 +30,7 @@ export function HowToBuy() {
           <AboutUsSection className="px-5 py-2 my-2" />
         </ScrollArea>
         </DrawerContent>
-      </Drawer>
+      </DrawerNestedRoot>
     );
   }
 
