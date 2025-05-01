@@ -23,6 +23,8 @@ const DrawerPortal = DrawerPrimitive.Portal
 
 const DrawerClose = DrawerPrimitive.Close
 
+const PlainDrawerContent = DrawerPrimitive.Content
+
 const DrawerOverlay = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>
@@ -61,11 +63,11 @@ const RightDrawerContent = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
   <DrawerPortal>
-    <DrawerOverlay />
+    <DrawerOverlay className="backdrop-blur-sm" />
     <DrawerPrimitive.Content
       ref={ref}
       className={cn(
-        "w-1/2 fixed inset-y-0 right-0 z-50 bg-background p-6 border-l",
+        "fixed inset-y-0 right-0 z-50 bg-background p-6 border-l",
         className
       )}
       {...props}
@@ -137,6 +139,7 @@ export {
   DrawerClose,
   DrawerContent,
   RightDrawerContent,
+  PlainDrawerContent,
   DrawerHeader,
   DrawerFooter,
   DrawerTitle,

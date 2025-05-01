@@ -23,23 +23,25 @@ function MobileMenu() {
         </Button>
       </DrawerTrigger>
       <RightDrawerContent
-        className="fixed inset-y-0 left-auto right-0 z-50 mt-0 w-1/2 rounded-none"
+        className=""
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <DrawerHeader>
-          <DrawerTitle>Menu</DrawerTitle>
+          <DrawerTitle>
+            Menu
+          </DrawerTitle>
           <DrawerDescription className="sr-only">
             For user to navigate through the page
           </DrawerDescription>
         </DrawerHeader>
         <div className="grid gap-8 py-8">
           <DrawerClose asChild>
-            <Link href="/#products" className="rounded-md" prefetch={false}>
+            <Link href="/#products" className="px-2" prefetch={false}>
               產品
             </Link>
           </DrawerClose>
           <DrawerClose asChild>
-            <Link href="/#about" className="rounded-md" prefetch={false}>
+            <Link href="/#about" className="px-2" prefetch={false}>
               關於我們
             </Link>
           </DrawerClose>

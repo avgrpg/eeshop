@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ModeToggle } from "./mode-toggle";
 import { TopNavLink } from "./top-nav-link";
 
 export function TopNav() {

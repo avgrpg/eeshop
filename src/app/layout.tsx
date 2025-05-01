@@ -1,7 +1,7 @@
 import "@uploadthing/react/styles.css";
 import "~/styles/globals.css";
 
-import { Noto_Sans, Noto_Sans_TC, Rubik } from "next/font/google";
+import { Noto_Sans_TC } from "next/font/google";
 import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
