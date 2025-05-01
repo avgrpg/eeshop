@@ -3,20 +3,25 @@
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
+import { cn } from "~/lib/utils";
 
-export function ModeToggle() {
+export function ModeToggle({ isMobile = false }) {
   const { setTheme, theme } = useTheme();
 
   return (
     <Button
       variant="outline"
-      size="icon"
+      size={!isMobile ? "icon" : "default"}
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       className="rounded-full"
     >
-      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-      <span className="sr-only">Toggle theme</span>
+      <div className="relative">
+        <Sun className="h-[1.2rem] w-[1.2rem] dark:hidden" />
+        <Moon className="h-[1.2rem] w-[1.2rem] hidden dark:block" />
+      </div>
+      <span className={cn(!isMobile && "sr-only")}>
+        {theme === "light" ? "切換至暗黑模式" : "切換至明亮模式"}
+      </span>
     </Button>
   );
 }

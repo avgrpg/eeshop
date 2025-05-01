@@ -1,5 +1,6 @@
 "use client"
 
+import { X } from "lucide-react"
 import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
 
@@ -54,6 +55,30 @@ const DrawerContent = React.forwardRef<
   </DrawerPortal>
 ))
 DrawerContent.displayName = "DrawerContent"
+
+const RightDrawerContent = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+  <DrawerPortal>
+    <DrawerOverlay />
+    <DrawerPrimitive.Content
+      ref={ref}
+      className={cn(
+        "w-1/2 fixed inset-y-0 right-0 z-50 bg-background p-6 border-l",
+        className
+      )}
+      {...props}
+    >
+      {children}
+      <DrawerClose className="absolute right-6 top-6 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+        <X className="h-4 w-4" />
+        <span className="sr-only">Close</span>
+      </DrawerClose>
+    </DrawerPrimitive.Content>
+  </DrawerPortal>
+))
+RightDrawerContent.displayName = "RightDrawerContent"
 
 const DrawerHeader = ({
   className,
@@ -111,6 +136,7 @@ export {
   DrawerTrigger,
   DrawerClose,
   DrawerContent,
+  RightDrawerContent,
   DrawerHeader,
   DrawerFooter,
   DrawerTitle,
