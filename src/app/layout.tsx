@@ -35,7 +35,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="zh" suppressHydrationWarning>
         <body
-          className={`${notoSans.className} grid h-screen grid-rows-[auto,1fr] antialiased`}
+          className={`${notoSans.className} grid grid-rows-[auto,1fr] antialiased`}
         >
           <ThemeProvider
             attribute="class"
