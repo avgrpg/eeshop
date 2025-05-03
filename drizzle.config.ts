@@ -6,7 +6,8 @@ export default {
   schema: "./src/server/db/schema.ts",
   dialect: "postgresql",
   dbCredentials: {
-    url: env.POSTGRES_URL,
+    url: env.DATABASE_URL,
   },
+  out: './supabase/migrations',
   tablesFilter: ["eeshop_*"],
 } satisfies Config;
