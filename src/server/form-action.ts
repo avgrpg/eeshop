@@ -11,7 +11,7 @@ import {
   tags,
 } from "./db/schema";
 import { tagFormSchema } from "~/schema/tag-form";
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { auth } from "@clerk/nextjs/server";
 import {
   categoryFormSchema,
@@ -390,5 +390,54 @@ export const deleteTag = async (tagId: number) => {
 
   revalidateTag("tags");
   redirect("/admin/tags");
+};
+export const deleteSubcategory = async (subcategoryId: number) => {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorized");
+
+  console.log("deleteSubcategory");
+
+  // find all products with this subcategoryId
+  const allAffectedProducts = await db.query.products.findMany({
+    where: eq(products.subcategoryId, subcategoryId),
+    columns: {
+      id: true,
+    },
+  });
+  // delete all producttags with this subcategoryId
+  await db.delete(productTags).where(
+    inArray(
+      productTags.productId,
+      allAffectedProducts.map((product) => product.id)
+    )
+  );
+  //delete all productImages with this subcategoryId
+  const deletedProductImages = await db
+    .delete(productImages)
+    .where(
+      inArray(
+        productImages.productId,
+        allAffectedProducts.map((product) => product.id)
+      )
+    )
+    .returning();
+  if (deletedProductImages.length > 0) {
+    const utapi = new UTApi();
+    await utapi.deleteFiles(
+      deletedProductImages
+        .map((image) => {
+          const imageId = image.url.split("/").pop();
+          if (!imageId) return "";
+          return imageId;
+        })
+        .filter((imageId) => imageId)
+    );
+  }
+
+  await db.delete(products).where(eq(products.subcategoryId, subcategoryId));
+  await db.delete(subcategories).where(eq(subcategories.id, subcategoryId));
+
+  revalidateTag("subcategories");
+  redirect("/admin/categories/sub");
 };
 
