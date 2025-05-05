@@ -2,12 +2,15 @@ import { AboutUs } from "~/components/about-us";
 import { ProductHero } from "~/components/product-hero";
 import { ProductSection } from "~/components/product-section";
 
-export default async function HomePage() {
-//   {
-//   searchParams,
-// }: {
-//   searchParams: Promise<Record<string, string | string[] | undefined>>;
-// }
+export default async function HomePage(
+
+// ) {
+  {
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}
+){
   // const productsWithImagesAndTags = await getProductsWithImagesnTags();
 
   // const { categories, subcategories } = await getProductCategories();
@@ -50,7 +53,7 @@ export default async function HomePage() {
       <ProductHero />
 
       <ProductSection
-      // searchParams={searchParams}
+      searchParams={searchParams}
       />
 
       {/* About us section */}
