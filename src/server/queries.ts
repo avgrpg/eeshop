@@ -7,7 +7,6 @@ import {
   products,
   productTags,
   subcategories,
-  tags,
 } from "./db/schema";
 import { eq, inArray } from "drizzle-orm";
 import { redirect } from "next/navigation";
@@ -195,15 +194,4 @@ export const getProductTags = cache(async () => {
 
 export type Tag = Awaited<ReturnType<typeof getProductTags>>[number];
 
-export const deleteTag = async (tagId: number) => {
-  const user = await auth();
-  if (!user.userId) throw new Error("Unauthorized");
 
-  console.log("deleteTag");
-
-  await db.delete(productTags).where(eq(productTags.tagId, tagId));
-  await db.delete(tags).where(eq(tags.id, tagId));
-
-  revalidateTag("tags");
-  redirect("/admin/tags");
-};

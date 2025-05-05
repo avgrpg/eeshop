@@ -379,4 +379,16 @@ export const deleteCategory = async (categoryId: number) => {
     ok: true,
   };
 };
+export const deleteTag = async (tagId: number) => {
+  const user = await auth();
+  if (!user.userId) throw new Error("Unauthorized");
+
+  console.log("deleteTag");
+
+  await db.delete(productTags).where(eq(productTags.tagId, tagId));
+  await db.delete(tags).where(eq(tags.id, tagId));
+
+  revalidateTag("tags");
+  redirect("/admin/tags");
+};
 
