@@ -94,12 +94,12 @@ export async function ProductSection(
         // key={`${urlcategory}-${urlsubcategory}`}
         key={key}
       > */}
-        <ProductsDisplay
+        {/* <ProductsDisplay
           // searchParams={searchParams}
           // urlcategory={urlcategory}
           // urlsubcategory={urlsubcategory}
           productsWithImagesAndTagsWithSubcategory={productsWithImagesAndTagsWithSubcategory}
-        />
+        /> */}
       {/* </Suspense> */}
     </section>
   );
