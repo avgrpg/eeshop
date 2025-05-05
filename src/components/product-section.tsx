@@ -91,18 +91,18 @@ export async function ProductSection(
         subcategories={subcategories}
         />
 
-      <Suspense
-        fallback={"loading"}
-        key={`${urlcategory}-${urlsubcategory}`}
-        // key={key}
-      >
-        <ProductsDisplay
+      {/* <Suspense
+        fallback={<ProductLoading />}
+        // key={`${urlcategory}-${urlsubcategory}`}
+        key={key}
+      > */}
+        {/* <ProductsDisplay
           // searchParams={searchParams}
           // urlcategory={urlcategory}
           // urlsubcategory={urlsubcategory}
           productsWithImagesAndTagsWithSubcategory={productsWithImagesAndTagsWithSubcategory}
-        />
-      </Suspense>
+        /> */}
+      {/* </Suspense> */}
     </section>
   );
 }
