@@ -46,12 +46,12 @@ const contactItems = [
     label: "訪問我們的拍賣網站 1",
     content: (
       <a
-        href="https://www.carousell.com.hk/u/josephchan17/"
+        href="https://carousell.app.link/hcZwiI6r4Sb"
         target="_blank"
         rel="noopener noreferrer"
         className="text-xl font-medium text-foreground transition hover:text-primary"
       >
-        Joseph Chan
+        Joseph
       </a>
     ),
   },
@@ -74,12 +74,12 @@ const contactItems = [
     label: "訪問我們的拍賣網站 2",
     content: (
       <a
-        href="https://www.carousell.com.hk/u/goodvalue4money/"
+        href="https://carousell.app.link/7IaAob6kLSb"
         target="_blank"
         rel="noopener noreferrer"
         className="text-xl font-medium text-foreground transition hover:text-primary"
       >
-        Joseph
+        Joseph Chan
       </a>
     ),
   },
@@ -139,7 +139,7 @@ export function AboutUsSection({
           {/* Social Links */}
           <div className="border-t border-border pt-6">
             <p className="mb-4 max-w-xs text-sm text-muted-foreground">
-              歡迎來購買我們的產品。如果要預約，請先與我們聯繫。
+              歡迎親臨本店參觀選購，請先聯絡預約時間。謝謝。
             </p>
           </div>
         </div>

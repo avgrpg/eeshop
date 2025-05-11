@@ -3,6 +3,8 @@ import { ProductHero } from "~/components/product-hero";
 import { ProductSection } from "~/components/product-section";
 
 export default async function HomePage() {
+
+// ) {
 //   {
 //   searchParams,
 // }: {

@@ -2,7 +2,12 @@ import { ProductsDisplay } from "./products-display";
 import { ProductsCategories } from "./products-categories";
 // import { urlSchema } from "~/schema/url-schema";
 // import { Skeleton } from "./ui/skeleton";
-import { getProductCategories, getProductsWithImagesnTags } from "~/server/queries";
+import {
+  getProductCategories,
+  getProductsWithImagesnTags,
+} from "~/server/queries";
+// import { urlSchema } from "~/schema/url-schema";
+// import { Suspense } from "react";
 
 // const ProductLoading = () => (
 //   <div className="grid w-full flex-1 grid-cols-2 gap-3 py-2 pt-3 md:grid-cols-3 md:px-7 lg:grid-cols-4 xl:grid-cols-5">
@@ -35,13 +40,12 @@ import { getProductCategories, getProductsWithImagesnTags } from "~/server/queri
 //   </div>
 // );
 
-export async function ProductSection(
+export async function ProductSection() {
 //   {
 //   searchParams,
 // }: {
 //   searchParams: Promise<Record<string, string | string[] | undefined>>;
 // }
-) {
   // const urlParams = await searchParams;
 
   // const parsedUrlcategory = urlSchema.safeParse(urlParams);
@@ -58,7 +62,7 @@ export async function ProductSection(
       // searchParams,
       // delay(300),
     ]);
-  
+
   const productsWithImagesAndTagsWithSubcategory =
     productsWithImagesAndTags.map((product) => {
       return {
@@ -87,19 +91,21 @@ export async function ProductSection(
         // urlsubcategory={urlsubcategory}
         categories={categories}
         subcategories={subcategories}
-        />
+      />
 
       {/* <Suspense
         fallback={<ProductLoading />}
         // key={`${urlcategory}-${urlsubcategory}`}
         key={key}
       > */}
-        <ProductsDisplay
-          // searchParams={searchParams}
-          // urlcategory={urlcategory}
-          // urlsubcategory={urlsubcategory}
-          productsWithImagesAndTagsWithSubcategory={productsWithImagesAndTagsWithSubcategory}
-        />
+      <ProductsDisplay
+        // searchParams={searchParams}
+        // urlcategory={urlcategory}
+        // urlsubcategory={urlsubcategory}
+        productsWithImagesAndTagsWithSubcategory={
+          productsWithImagesAndTagsWithSubcategory
+        }
+      />
       {/* </Suspense> */}
     </section>
   );
