@@ -333,6 +333,7 @@ export const onEditSubcategoryForm = async (
     .set({
       name: parsedData.data.name,
       description: parsedData.data.description,
+      categoryId: parsedData.data.categoryId,
     })
     .where(eq(subcategories.id, subcategoryId));
 
