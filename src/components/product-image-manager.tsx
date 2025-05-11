@@ -39,7 +39,7 @@ export const ProductImageManager = ({
         </Button>
       </DialogTrigger>
       <DialogContent
-      // className="max-w-screen-xl"
+        className="max-h-[80vh] overflow-y-auto"
       >
         <DialogHeader>
           <DialogTitle>Manage Images</DialogTitle>

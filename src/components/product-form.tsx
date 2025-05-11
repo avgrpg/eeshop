@@ -391,7 +391,7 @@ export const ProductEditButton = ({
           <span>Edit</span>
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Edit Product</DialogTitle>
           <DialogDescription className="sr-only">
@@ -439,7 +439,7 @@ export const AddProductDialog = ({
           <Plus size={16} />
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Product Details</DialogTitle>
           <DialogDescription>
