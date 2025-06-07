@@ -2,6 +2,22 @@ import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@cl
 import { AppSidebar } from "~/components/app-sidebar";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "~/components/ui/sidebar";
 
+export const metadata = {
+  title: 'Admin Panel',
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+      'max-video-preview': -1,
+      'max-snippet': -1,
+    },
+  },
+};
+
 export default function Layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
