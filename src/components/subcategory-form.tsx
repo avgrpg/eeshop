@@ -61,7 +61,7 @@ const PrimaryCategoryCombobox = ({
       name="categoryId"
       render={({ field }) => (
         <FormItem className="flex flex-col gap-1">
-          <FormLabel>Category</FormLabel>
+          <FormLabel>Parent Category</FormLabel>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <FormControl>
