@@ -41,7 +41,7 @@ export function HowToBuy() {
           How to Buy
         </Button>
       </DialogTrigger>
-      <DialogContent className="min-w-[80vw]">
+      <DialogContent className="min-w-[70vw] max-h-[70vh] overflow-y-auto">
         <AboutUsSection className="p-10" />
       </DialogContent>
     </Dialog>

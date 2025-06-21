@@ -182,7 +182,7 @@ export function ResponseDialogDrawer({
       {/* <DialogTrigger asChild>
         <div>{children}</div>
       </DialogTrigger> */}
-      <DialogContent className="min-w-[80vw]">
+      <DialogContent className="min-w-[80vw] max-h-[80vh] overflow-y-auto">
         <DialogHeader className="p-6">
           <DialogTitle>{product && product.name}</DialogTitle>
           <DialogDescription className="sr-only">
